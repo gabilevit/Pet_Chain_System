@@ -1,0 +1,86 @@
+﻿  Animal.c
+C:\Users\gabil\Afeka\Programing Systems With C\Pet_Chain_System\Pet_Chain_System\Animal.c(8,11): warning C4098: 'initAnimal': 'void' function returning a value
+C:\Users\gabil\Afeka\Programing Systems With C\Pet_Chain_System\Pet_Chain_System\Animal.c(9,10): warning C4013: 'getPrice' undefined; assuming extern returning int
+C:\Users\gabil\Afeka\Programing Systems With C\Pet_Chain_System\Pet_Chain_System\Animal.c(12,1): error C2059: syntax error: '}'
+C:\Users\gabil\Afeka\Programing Systems With C\Pet_Chain_System\Pet_Chain_System\Animal.c(19,8): warning C4013: 'scanf' undefined; assuming extern returning int
+C:\Users\gabil\Afeka\Programing Systems With C\Pet_Chain_System\Pet_Chain_System\Animal.c(21,10): warning C4013: 'printf' undefined; assuming extern returning int
+  Category.c
+  Certificate.c
+  Date.c
+C:\Users\gabil\Afeka\Programing Systems With C\Pet_Chain_System\Pet_Chain_System\Date.c(34,2): error C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  Discount.c
+C:\Users\gabil\Afeka\Programing Systems With C\Pet_Chain_System\Pet_Chain_System\Discount.c(13,13): warning C4013: 'strlen' undefined; assuming extern returning int
+C:\Users\gabil\Afeka\Programing Systems With C\Pet_Chain_System\Pet_Chain_System\Discount.c(21,16): warning C4013: 'isupper' undefined; assuming extern returning int
+C:\Users\gabil\Afeka\Programing Systems With C\Pet_Chain_System\Pet_Chain_System\Discount.c(31,8): warning C4013: 'strcpy' undefined; assuming extern returning int
+C:\Users\gabil\Afeka\Programing Systems With C\Pet_Chain_System\Pet_Chain_System\Discount.c(37,12): error C2065: 'pPort': undeclared identifier
+C:\Users\gabil\Afeka\Programing Systems With C\Pet_Chain_System\Pet_Chain_System\Discount.c(37,14): error C2223: left of '->country' must point to struct/union
+C:\Users\gabil\Afeka\Programing Systems With C\Pet_Chain_System\Pet_Chain_System\Discount.c(38,11): warning C4098: 'initDiscountNoCode': 'void' function returning a value
+C:\Users\gabil\Afeka\Programing Systems With C\Pet_Chain_System\Pet_Chain_System\Discount.c(39,10): warning C4098: 'initDiscountNoCode': 'void' function returning a value
+  General.c
+C:\Users\gabil\Afeka\Programing Systems With C\Pet_Chain_System\Pet_Chain_System\General.c(27,2): error C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\gabil\Afeka\Programing Systems With C\Pet_Chain_System\Pet_Chain_System\General.c(52,59): warning C4028: formal parameter 3 different from declaration
+  List.c
+  main.c
+C:\Users\gabil\Afeka\Programing Systems With C\Pet_Chain_System\Pet_Chain_System\main.c(24,17): error C2065: 'AirportManager': undeclared identifier
+C:\Users\gabil\Afeka\Programing Systems With C\Pet_Chain_System\Pet_Chain_System\main.c(24,17): error C2146: syntax error: missing ';' before identifier 'manager'
+C:\Users\gabil\Afeka\Programing Systems With C\Pet_Chain_System\Pet_Chain_System\main.c(24,24): error C2065: 'manager': undeclared identifier
+C:\Users\gabil\Afeka\Programing Systems With C\Pet_Chain_System\Pet_Chain_System\main.c(25,12): error C2065: 'Airline': undeclared identifier
+C:\Users\gabil\Afeka\Programing Systems With C\Pet_Chain_System\Pet_Chain_System\main.c(25,12): error C2146: syntax error: missing ';' before identifier 'company'
+C:\Users\gabil\Afeka\Programing Systems With C\Pet_Chain_System\Pet_Chain_System\main.c(25,19): error C2065: 'company': undeclared identifier
+C:\Users\gabil\Afeka\Programing Systems With C\Pet_Chain_System\Pet_Chain_System\main.c(27,22): error C2065: 'manager': undeclared identifier
+C:\Users\gabil\Afeka\Programing Systems With C\Pet_Chain_System\Pet_Chain_System\main.c(27,22): warning C4133: 'function': incompatible types - from 'int *' to 'StoreManager *'
+C:\Users\gabil\Afeka\Programing Systems With C\Pet_Chain_System\Pet_Chain_System\main.c(28,13): warning C4013: 'initAirline' undefined; assuming extern returning int
+C:\Users\gabil\Afeka\Programing Systems With C\Pet_Chain_System\Pet_Chain_System\main.c(28,22): error C2065: 'company': undeclared identifier
+C:\Users\gabil\Afeka\Programing Systems With C\Pet_Chain_System\Pet_Chain_System\main.c(40,17): warning C4013: 'addPlane' undefined; assuming extern returning int
+C:\Users\gabil\Afeka\Programing Systems With C\Pet_Chain_System\Pet_Chain_System\main.c(40,26): error C2065: 'company': undeclared identifier
+C:\Users\gabil\Afeka\Programing Systems With C\Pet_Chain_System\Pet_Chain_System\main.c(45,19): warning C4013: 'addAirport' undefined; assuming extern returning int
+C:\Users\gabil\Afeka\Programing Systems With C\Pet_Chain_System\Pet_Chain_System\main.c(45,28): error C2065: 'manager': undeclared identifier
+C:\Users\gabil\Afeka\Programing Systems With C\Pet_Chain_System\Pet_Chain_System\main.c(50,18): warning C4013: 'addFlight' undefined; assuming extern returning int
+C:\Users\gabil\Afeka\Programing Systems With C\Pet_Chain_System\Pet_Chain_System\main.c(50,27): error C2065: 'company': undeclared identifier
+C:\Users\gabil\Afeka\Programing Systems With C\Pet_Chain_System\Pet_Chain_System\main.c(50,37): error C2065: 'manager': undeclared identifier
+C:\Users\gabil\Afeka\Programing Systems With C\Pet_Chain_System\Pet_Chain_System\main.c(55,16): warning C4013: 'printCompany' undefined; assuming extern returning int
+C:\Users\gabil\Afeka\Programing Systems With C\Pet_Chain_System\Pet_Chain_System\main.c(55,25): error C2065: 'company': undeclared identifier
+C:\Users\gabil\Afeka\Programing Systems With C\Pet_Chain_System\Pet_Chain_System\main.c(59,17): warning C4013: 'printAirports' undefined; assuming extern returning int
+C:\Users\gabil\Afeka\Programing Systems With C\Pet_Chain_System\Pet_Chain_System\main.c(59,26): error C2065: 'manager': undeclared identifier
+C:\Users\gabil\Afeka\Programing Systems With C\Pet_Chain_System\Pet_Chain_System\main.c(63,31): warning C4013: 'doPrintFlightsWithPlaneType' undefined; assuming extern returning int
+C:\Users\gabil\Afeka\Programing Systems With C\Pet_Chain_System\Pet_Chain_System\main.c(63,40): error C2065: 'company': undeclared identifier
+C:\Users\gabil\Afeka\Programing Systems With C\Pet_Chain_System\Pet_Chain_System\main.c(67,14): warning C4013: 'sortFlight' undefined; assuming extern returning int
+C:\Users\gabil\Afeka\Programing Systems With C\Pet_Chain_System\Pet_Chain_System\main.c(67,23): error C2065: 'company': undeclared identifier
+C:\Users\gabil\Afeka\Programing Systems With C\Pet_Chain_System\Pet_Chain_System\main.c(71,14): warning C4013: 'findFlight' undefined; assuming extern returning int
+C:\Users\gabil\Afeka\Programing Systems With C\Pet_Chain_System\Pet_Chain_System\main.c(71,23): error C2065: 'company': undeclared identifier
+C:\Users\gabil\Afeka\Programing Systems With C\Pet_Chain_System\Pet_Chain_System\main.c(74,19): warning C4013: 'findMostPopular' undefined; assuming extern returning int
+C:\Users\gabil\Afeka\Programing Systems With C\Pet_Chain_System\Pet_Chain_System\main.c(77,21): warning C4013: 'findMostExpensive' undefined; assuming extern returning int
+C:\Users\gabil\Afeka\Programing Systems With C\Pet_Chain_System\Pet_Chain_System\main.c(90,22): error C2065: 'manager': undeclared identifier
+C:\Users\gabil\Afeka\Programing Systems With C\Pet_Chain_System\Pet_Chain_System\main.c(90,22): warning C4133: 'function': incompatible types - from 'int *' to 'StoreManager *'
+C:\Users\gabil\Afeka\Programing Systems With C\Pet_Chain_System\Pet_Chain_System\main.c(91,13): warning C4013: 'freeCompany' undefined; assuming extern returning int
+C:\Users\gabil\Afeka\Programing Systems With C\Pet_Chain_System\Pet_Chain_System\main.c(91,22): error C2065: 'company': undeclared identifier
+C:\Users\gabil\Afeka\Programing Systems With C\Pet_Chain_System\Pet_Chain_System\main.c(104,2): error C4996: 'scanf': This function or variable may be unsafe. Consider using scanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\gabil\Afeka\Programing Systems With C\Pet_Chain_System\Pet_Chain_System\main.c(107,2): error C4996: 'scanf': This function or variable may be unsafe. Consider using scanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  Review.c
+  Store.c
+C:\Users\gabil\Afeka\Programing Systems With C\Pet_Chain_System\Pet_Chain_System\Store.c(15,35): warning C4013: 'calloc' undefined; assuming extern returning int
+C:\Users\gabil\Afeka\Programing Systems With C\Pet_Chain_System\Pet_Chain_System\Store.c(15,54): warning C4312: 'type cast': conversion from 'int' to 'Animal *' of greater size
+C:\Users\gabil\Afeka\Programing Systems With C\Pet_Chain_System\Pet_Chain_System\Store.c(20,39): warning C4013: 'realloc' undefined; assuming extern returning int
+C:\Users\gabil\Afeka\Programing Systems With C\Pet_Chain_System\Pet_Chain_System\Store.c(20,103): warning C4312: 'type cast': conversion from 'int' to 'Animal **' of greater size
+C:\Users\gabil\Afeka\Programing Systems With C\Pet_Chain_System\Pet_Chain_System\Store.c(23,7): warning C4013: 'free' undefined; assuming extern returning int
+C:\Users\gabil\Afeka\Programing Systems With C\Pet_Chain_System\Pet_Chain_System\Store.c(33,8): warning C4013: 'printf' undefined; assuming extern returning int
+C:\Users\gabil\Afeka\Programing Systems With C\Pet_Chain_System\Pet_Chain_System\Store.c(40,65): error C2065: 'printAnimalPtr': undeclared identifier
+C:\Users\gabil\Afeka\Programing Systems With C\Pet_Chain_System\Pet_Chain_System\Store.c(40,65): warning C4047: 'function': 'void (__cdecl *)(void *)' differs in levels of indirection from 'int'
+C:\Users\gabil\Afeka\Programing Systems With C\Pet_Chain_System\Pet_Chain_System\Store.c(40,51): warning C4024: 'generalArrayFunction': different types for formal and actual parameter 4
+C:\Users\gabil\Afeka\Programing Systems With C\Pet_Chain_System\Pet_Chain_System\Store.c(51,64): error C2065: 'freeAnimalPtr': undeclared identifier
+C:\Users\gabil\Afeka\Programing Systems With C\Pet_Chain_System\Pet_Chain_System\Store.c(51,64): warning C4047: 'function': 'void (__cdecl *)(void *)' differs in levels of indirection from 'int'
+C:\Users\gabil\Afeka\Programing Systems With C\Pet_Chain_System\Pet_Chain_System\Store.c(51,51): warning C4024: 'generalArrayFunction': different types for formal and actual parameter 4
+  StoreManager.c
+C:\Users\gabil\Afeka\Programing Systems With C\Pet_Chain_System\Pet_Chain_System\StoreManager.c(7,2): error C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\gabil\Afeka\Programing Systems With C\Pet_Chain_System\Pet_Chain_System\StoreManager.c(17,16): error C2082: redefinition of formal parameter 'pStore'
+C:\Users\gabil\Afeka\Programing Systems With C\Pet_Chain_System\Pet_Chain_System\StoreManager.c(17,32): warning C4013: 'calloc' undefined; assuming extern returning int
+C:\Users\gabil\Afeka\Programing Systems With C\Pet_Chain_System\Pet_Chain_System\StoreManager.c(17,50): warning C4312: 'type cast': conversion from 'int' to 'Store *' of greater size
+C:\Users\gabil\Afeka\Programing Systems With C\Pet_Chain_System\Pet_Chain_System\StoreManager.c(36,11): warning C4013: 'printf' undefined; assuming extern returning int
+C:\Users\gabil\Afeka\Programing Systems With C\Pet_Chain_System\Pet_Chain_System\StoreManager.c(53,19): warning C4013: 'getStorecount' undefined; assuming extern returning int
+C:\Users\gabil\Afeka\Programing Systems With C\Pet_Chain_System\Pet_Chain_System\StoreManager.c(87,43): error C2065: 'printStoreV': undeclared identifier
+C:\Users\gabil\Afeka\Programing Systems With C\Pet_Chain_System\Pet_Chain_System\StoreManager.c(87,43): warning C4047: 'function': 'void (__cdecl *)(const void *)' differs in levels of indirection from 'int'
+C:\Users\gabil\Afeka\Programing Systems With C\Pet_Chain_System\Pet_Chain_System\StoreManager.c(87,32): warning C4024: 'L_print': different types for formal and actual parameter 2
+C:\Users\gabil\Afeka\Programing Systems With C\Pet_Chain_System\Pet_Chain_System\StoreManager.c(92,41): error C2065: 'freeStoreV': undeclared identifier
+C:\Users\gabil\Afeka\Programing Systems With C\Pet_Chain_System\Pet_Chain_System\StoreManager.c(92,41): warning C4047: 'function': 'void (__cdecl *)(void *)' differs in levels of indirection from 'int'
+C:\Users\gabil\Afeka\Programing Systems With C\Pet_Chain_System\Pet_Chain_System\StoreManager.c(92,31): warning C4024: 'L_free': different types for formal and actual parameter 2
+  Generating Code...
