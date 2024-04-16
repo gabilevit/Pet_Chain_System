@@ -12,12 +12,15 @@ static const char* CategoryTypeStr[eNofCategoryTypes]
 
 typedef struct
 {
-	Discount* pDiscount;
 	eCategoryType type;
+	Discount* pDiscount;
 }Category;
 
-void initCategory(Category* pCat, const Discount* discount);
+void initCategory(Category* pCat, int option);
 eCategoryType getCategoryType();
+int addDiscountOrUpdateDiscount(Category* pCat);
+int initDiscount(Discount* pDiscount, Category* pCat);
+int checkUniqeCode(const char* code, const Category* pCat);
 void printCategory(const Category* pCat);
 void freeCategory(Category* pCat);
 

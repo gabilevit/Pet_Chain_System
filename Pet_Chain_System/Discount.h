@@ -1,17 +1,17 @@
 #ifndef __DISCOUNT__
 #define __DISCOUNT__
 
-#define LEN 3
+#define LEN 6
 
 typedef struct
 {
 	char discountCode[LEN + 1];
-	float discountPrice;
+	int discountPercent;
 }Discount;
 
+int initDiscountWithoutACode(Discount* pDis);
 void getDiscountCode(char* code);
-float getDiscountPrice();
-void initDiscountNoCode(Discount* pDis);
+int getDiscountPercent(Discount* pDis);
 void printDiscount(const Discount* pDis);
 
 #endif // !__DISCOUNT__

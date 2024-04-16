@@ -1,17 +1,17 @@
 #ifndef __CERTIFICATE__
 #define __CERTIFICATE__
 
+#define MIN_CERTIFICATE_ID 1000
+#define MAX_CERTIFICATE_ID 9999
+
 typedef struct
 {
-	int animalId;
-	char* AnimalDescription;
+	int animalCertificateId;
 	char* countryOfOrigin;
+	char* animalDescription;
 }Certificate;
 
-void initCertificate(Certificate* pCer, Certificate* cerArr, int cerCount);
-int getCertificateAnimalId(Certificate* cerArr, int cerCount);
-Certificate* findCertificateByAnimalId(Certificate* cerArr, int count, int sn);
-int isSerialNumberUnique(Certificate* cerArr, int cerCount, int num);
+int initCertificate(Certificate* pCer, int certificateAnimalId);
 void printCertificate(const Certificate* pCer);
 void freeCertificate(Certificate* pCer);
 

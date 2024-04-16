@@ -5,12 +5,12 @@
 
 typedef struct
 {
-	char* info;
+	char* comment;
 	Date date;
 }Review;
 
-void initReview(Review* pRev);
-void printReview(const Review* pRev);
-void freeReview(Review* pRev);
+int initReview(Review* pRev);
+void printReview(const void* val);
+void freeReview(void* pReview);
 
 #endif // !__REVIEW__

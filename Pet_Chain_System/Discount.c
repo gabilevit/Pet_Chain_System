@@ -1,6 +1,26 @@
 #include <stdio.h>
+#include <string.h>
+#include <ctype.h>
 #include "Discount.h"
 #include "General.h"
+
+int initDiscountWithoutACode(Discount* pDis)
+{
+	getDiscountPercent(pDis);
+}
+
+int getDiscountPercent(Discount* pDis)
+{
+	printf("Enter how much discount percent the the category of animals will have: ");
+	int discountPercent;
+	do {
+		scanf("%d", &discountPercent);
+		if (discountPercent <= 5 || discountPercent >= 70) {
+			printf("The discount cant be less then 5% or greater than 70%, try again.\n");
+		}
+	} while (discountPercent <= 5 || discountPercent >= 70);
+	pDis->discountPercent = discountPercent;
+}
 
 void getDiscountCode(char* code)
 {
@@ -8,19 +28,28 @@ void getDiscountCode(char* code)
 	int ok = 1;
 	do {
 		ok = 1;
-		printf("Enter airport code  - %d UPPER CASE letters\t", LEN);
+		printf("Enter discount code  - %d SHOULD BE 4 UPPER CASE letters AND 2 digits\t", LEN);
 		myGets(temp, MAX_STR_LEN);
 		if (strlen(temp) != LEN)
 		{
-			printf("code should be %d letters\n", LEN);
+			printf("code should be %d in lenght\n", LEN);
 			ok = 0;
 		}
 		else {
 			for (int i = 0; i < LEN; i++)
 			{
-				if (isupper(temp[i]) == 0)
+				if (i <= 3) // the first 4 uppercase letters
 				{
-					printf("Need to be upper case letter\n");
+					if (isupper(temp[i]) == 0)
+					{
+						printf("First 4 letters need to be upper case letters\n");
+						ok = 0;
+						break;
+					}
+				}
+				if (isdigit(temp[i]) == 0)
+				{
+					printf("The code needs to end with last 2 digits\n");
 					ok = 0;
 					break;
 				}
@@ -31,15 +60,10 @@ void getDiscountCode(char* code)
 	strcpy(code, temp);
 }
 
-void initDiscountNoCode(Discount* pDis)
+void printDiscount(const Discount* pDis)
 {
-	pDis->discountPrice = getDiscountPrice();
-	if (!pPort->country)
-		return 0;
-	return 1;
+	printf("The discount code is: %s\n", pDis->discountCode);
+	printf("This category of animals in this type has a discount of %d%\n", pDis->discountPercent);
 }
 
-float getDiscountPrice()
-{
 
-}

@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <time.h>
 #include "General.h"
 #include "Date.h"
 
@@ -13,7 +14,7 @@ void getCorrectDate(Date* pDate)
 	int ok = 1;
 
 	do {
-		printf("Enter Flight Date dd%c%cmm%c%cyyyy  minimum year %d\t",
+		printf("Enter birth Date dd%c%cmm%c%cyyyy  minimum year %d\t",
 			SPECIAL_TAV, SPECIAL_TAV, SPECIAL_TAV, SPECIAL_TAV, MIN_YEAR);
 		myGets(date, MAX_STR_LEN);
 		ok = checkDate(date, pDate);
@@ -22,6 +23,21 @@ void getCorrectDate(Date* pDate)
 	} while (!ok);
 }
 
+void	generateCurrentDate(Date* pDate)
+{
+	Date date = *(pDate);
+	time_t currentTime;
+	struct tm* localTime;
+
+	// Get current time
+	currentTime = time(NULL);
+	localTime = localtime(&currentTime);
+
+	// Assign current date components
+	date.day = localTime->tm_mday;
+	date.month = localTime->tm_mon + 1; // Months are zero-based
+	date.year = localTime->tm_year + 1900; // Years since 1900
+}
 
 int	 checkDate(char* date, Date* pDate)
 {

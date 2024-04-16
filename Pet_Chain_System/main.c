@@ -5,27 +5,39 @@
 
 typedef enum
 {
-	eAddStore, eAddAnimal, eAddReview, eAddDiscount, ePrintStores,
-	ePrintAnimalsCategoryType, eSortAnimals, eFindAnimal,
-	eFindPopularAnimal, eFindExpensiveAnimal, eNofOptions
-} eMenuOptions;
+	eAddStore, eEnterStore,  ePrintStores, eNofOptionsInMain
+} eMainMenuOptions;
 
-const char* str[eNofOptions] = { "Add Stroe","Add Animal","Add a review",
-								"Add a discount", "Print all stores",
-								"Print all animals with category type",
-								"Sort Animals", "Find Animal", "Find most popular animal",
-								"Find most expensive animal in store" };
+typedef enum
+{
+	eAddAnimal, eAddReview, eAddDiscount, /*eSortAnimals, 
+	eFindAnimal, eFindPopularAnimal, eFindExpensiveAnimal,*/ eNoOptionsInStoreMenu
+} eStoreMenu;
+
+const char* str1[eNofOptionsInMain] = { "Add Store", "Enter a store", "Print all stores"};
+
+const char* str2[eNoOptionsInStoreMenu] = { "Add Animal","Add a review",
+										"Add/Update a discount to a specific category",
+										/*"Sort Animals", "Find Animal", "Find most popular animal",
+										"Find most expensive animal in store" */};
 
 #define EXIT			-1
+#define RETURN			-2
 int menu();
+int storeMenu();
+void storeLobby(Store* pStore, Category* cat1, Category* cat2, Category* cat3);
+void init3CategoriesHardCoded(Category* cat1, Category* cat2, Category* cat3);
+Category* getSpecificCategory(eCategoryType eType, Category* cat1, Category* cat2, Category* cat3);
 
 int main()
 {
-	AirportManager	manager;
-	Airline			company;
-
+	StoreManager	manager;
+	Store* theStore;
+	Category* dogCategory = (Category*)calloc(1, sizeof(Category));
+	Category* catCategory = (Category*)calloc(1, sizeof(Category));
+	Category* birdCategory = (Category*)calloc(1, sizeof(Category));
+	init3CategoriesHardCoded(dogCategory, catCategory, birdCategory);
 	initManager(&manager);
-	initAirline(&company);
 
 	int option;
 	int stop = 0;
@@ -33,49 +45,26 @@ int main()
 
 	do
 	{
+		printf("Welcome to %s!", manager.chainName);
 		option = menu();
 		switch (option)
 		{
 		case eAddStore:
-			if (!addPlane(&company))
-				printf("Error adding plane\n");
+			if (!addStore(&manager));
+				printf("Error adding store\n");
 			break;
 
-		case eAddAnimal:
-			if (!addAirport(&manager))
-				printf("Error adding airport\n");
-			break;
-
-		case eAddReview:
-			if (!addFlight(&company, &manager))
-				printf("Error adding flight\n");
-			break;
-
-		case eAddDiscount:
-			printCompany(&company);
+		case eEnterStore:
+			theStore = enterTheStore(&manager);
+			if (!theStore)
+				break;
+			storeLobby(theStore, dogCategory, catCategory, birdCategory);
 			break;
 
 		case ePrintStores:
-			printAirports(&manager);
+			printStores(&manager);
 			break;
 
-		case ePrintAnimalsCategoryType:
-			doPrintFlightsWithPlaneType(&company);
-			break;
-
-		case eSortAnimals:
-			sortFlight(&company);
-			break;
-
-		case eFindAnimal:
-			findFlight(&company);
-			break;
-		case eFindPopularAnimal:
-			findMostPopular();
-			break;
-		case eFindExpensiveAnimal:
-			findMostExpensive();
-			break;
 		case EXIT:
 			printf("Bye bye\n");
 			stop = 1;
@@ -88,22 +77,108 @@ int main()
 	} while (!stop);
 
 	freeManager(&manager);
-	freeCompany(&company);
 
 	return 1;
+}
+
+void storeLobby(Store* pStore, Category* cat1, Category* cat2, Category* cat3) {
+	//if (pStore == NULL) return;
+	Category* chosenCategory;
+	Animal* chosenAnimal;
+	int choice = 0;
+	do {
+		printf("Welcome to store number %d!", pStore->storeNumber);
+		choice = storeMenu();
+		switch (choice)
+		{
+		case eAddAnimal:
+			chosenCategory = getSpecificCategory(getCategoryType(), cat1, cat2, cat3);
+			if (!addAnimal(pStore, chosenCategory))
+				printf("Error adding animal\n");
+			break;
+
+		case eAddReview:
+			chosenAnimal = getAnimal(pStore);
+			if (!chosenAnimal)
+				break;
+			if (!addReview(chosenAnimal))
+				printf("Error adding a review\n");
+			break;
+
+		case eAddDiscount:
+			chosenCategory = getSpecificCategory(getCategoryType(), cat1, cat2, cat3);
+			if (!addDiscountOrUpdateDiscount(chosenCategory))
+				printf("Error adding a discount\n");
+			break;
+
+		/*case eSortAnimals:
+			sortFlight(&company);
+			break;
+
+		case eFindAnimal:
+			findFlight(&company);
+			break;
+
+		case eFindPopularAnimal:
+			findMostPopular();
+			break;
+
+		case eFindExpensiveAnimal:
+			findMostExpensive();
+			break;*/
+
+		case RETURN:
+			choice = 1;
+			break;
+
+		default:
+			printf("Wrong option\n");
+			break;
+		}
+	} while (!choice);
 }
 
 int menu()
 {
 	int option;
 	printf("\n\n");
-	printf("Welcome to our pet shop system\n");
-	for (int i = 0; i < eNofOptions; i++)
-		printf("%d - %s\n", i, str[i]);
+	for (int i = 0; i < eNofOptionsInMain; i++)
+		printf("%d - %s\n", i, str1[i]);
 	printf("%d - Quit\n", EXIT);
 	scanf("%d", &option);
 	//clean buffer
 	char tav;
 	scanf("%c", &tav);
 	return option;
+}
+
+int storeMenu()
+{
+	int option;
+	printf("\n\n");
+	for (int i = 0; i < eNoOptionsInStoreMenu; i++)
+		printf("%d - %s\n", i, str2[i]);
+	printf("%d - Return to main menu\n", RETURN);
+	scanf("%d", &option);
+	//clean buffer
+	char tav;
+	scanf("%c", &tav);
+	return option;
+}
+
+void init3CategoriesHardCoded(Category* cat1, Category* cat2, Category* cat3)
+{
+	initCategory(cat1, 0);
+	initCategory(cat2, 1);
+	initCategory(cat3, 2);
+}
+
+Category* getSpecificCategory(eCategoryType eType, Category* dog, Category* cat, Category* bird)
+{
+	if (dog->type == eType)
+		return dog;
+	else if (cat->type == eType)
+		return cat;
+	else 
+		return bird;
 }

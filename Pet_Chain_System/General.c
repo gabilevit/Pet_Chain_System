@@ -49,7 +49,7 @@ char* myGets(char* buffer, int size)
 	return NULL;
 }
 
-void generalArrayFunction(void* element, int size, size_t typeSize, void f(void* element))
+void generalArrayFunction(void* element, int size, int typeSize, void f(void* element))
 {
 	for (int i = 0; i < size; i++)
 		f((char*)element + i * typeSize);
