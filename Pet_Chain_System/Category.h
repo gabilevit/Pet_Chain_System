@@ -2,6 +2,7 @@
 #define __CATEGORY__
 
 #include "Discount.h"
+#include "FileHelper.h"
 
 typedef enum {
 	eDog, eCat, eBird, eNofCategoryTypes
@@ -21,7 +22,17 @@ eCategoryType getCategoryType();
 int addDiscountOrUpdateDiscount(Category* pCat);
 int initDiscount(Discount* pDiscount, Category* pCat);
 int checkUniqeCode(const char* code, const Category* pCat);
+
+// FILE FUNCTIONS
+int	saveCategoryToTextFile(const Category* pCat, FILE* fp);
+int	loadCategoryFromTextFile(Category* pCat, FILE* fp);
+int	saveCategoryToBinaryFile(const Category* pCat, FILE* fp);
+int	loadCategoryFromBinaryFile(Category* pCat, FILE* fp);
+
+// PRINT FUNCTION
 void printCategory(const Category* pCat);
+
+// FREE FUNCTION
 void freeCategory(Category* pCat);
 
 #endif // !__CATEGORY__

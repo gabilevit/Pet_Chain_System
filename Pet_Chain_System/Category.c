@@ -74,6 +74,42 @@ int checkUniqeCode(const char* code, const Category* pCat)
 	return 0; // Code is unique
 }
 
+int	saveCategoryToTextFile(const Category* pCat, FILE* fp)
+{
+	if (!writeIntToTextFile(pCat->type, fp, "Error writing category type to text file\n"))
+		return 0;
+	if (!saveDiscountToTextFile(pCat->pDiscount, fp))
+		return 0;
+	return 1;
+}
+
+int	loadCategoryFromTextFile(Category* pCat, FILE* fp)
+{
+	if (!readIntFromTextFile(pCat->type, fp, "Error reading category type from text file\n"))
+		return 0;
+	if (!loadDiscountFromTextFile(pCat->pDiscount, fp))
+		return 0;
+	return 1;
+}
+
+int	saveCategoryToBinaryFile(const Category* pCat, FILE* fp)
+{
+	if (!writeIntToFile(pCat->type, fp, "Error writing category type to binary file\n"))
+		return 0;
+	if (!saveDiscountToBinaryFileCompressed(pCat->pDiscount, fp))
+		return 0;
+	return 1;
+}
+
+int	loadCategoryFromBinaryFile(Category* pCat, FILE* fp)
+{
+	if (!readIntFromFile(pCat->type, fp, "Error reading category type from binary file\n"))
+		return 0;
+	if (!loadDiscountFromBinaryFileCompressed(pCat->pDiscount, fp))
+		return 0;
+	return 1;
+}
+
 void printCategory(const Category* pCat)
 {
 	printf("Category type: %s\n", CategoryTypeStr[pCat->type]);

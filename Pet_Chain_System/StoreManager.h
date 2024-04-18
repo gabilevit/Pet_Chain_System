@@ -5,6 +5,7 @@
 
 #include "list.h"
 #include "Store.h"
+#include "FileHelper.h"
 
 typedef struct
 {
@@ -18,12 +19,17 @@ int generateStoreNumber(StoreManager* pManager);
 int	getStoreCount(const StoreManager* pManager);
 Store* findStore(StoreManager* manager, const int storeNumber);
 Store* enterTheStore(StoreManager* pManager);
+
+// FILE FUNCTIONS
+int	saveManagerToTextFile(const StoreManager* pManager, const char* fileName);
+int	loadManagerFromTextFile(StoreManager* pManager, const char* fileName);
+int	saveManagerToBinaryFile(const StoreManager* pManager, const char* fileName);
+int	loadManagerFromBinaryFile(StoreManager* pManager, const char* fileName);
+
+// PRINT FUNCTION
 void printStores(const StoreManager* pManager);
+
+// FREE FUNCTION
 void freeManager(StoreManager* pManager);
-
-
-// NOT IMPLEMENTED
-int		saveManagerToFile(const StoreManager* pManager, const char* fileName);
-int		loadManagerFromFile(StoreManager* pManager, const char* fileName);
 
 #endif // !__STORE_MANAGER__

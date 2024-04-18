@@ -54,3 +54,13 @@ void generalArrayFunction(void* element, int size, int typeSize, void f(void* el
 	for (int i = 0; i < size; i++)
 		f((char*)element + i * typeSize);
 }
+
+int generalSaveLoadArrFile(void* element, int size, int typeSize, FILE* fp, int f(void* element, FILE* fp))
+{
+	for (int i = 0; i < size; i++)
+	{
+		if (!f((char*)element + i * typeSize, fp))
+			return 0;
+	}
+	return 1;
+}

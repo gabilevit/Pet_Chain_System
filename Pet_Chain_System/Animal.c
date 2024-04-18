@@ -1,7 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "Animal.h"
-#include "General.h"
 
 void initAnimal(Animal* pAnimal, Category* pCategory, Certificate* pCertificate)
 {
@@ -59,9 +58,136 @@ int addReview(Animal* pAnimal)
 	return 1;
 }
 
+int	saveAnimalToTextFile(const Animal* pAnimal, FILE* fp)
+{
+	if (!writeStringToTextFile(pAnimal->name, fp, "Error writing name to text file\n"))
+		return 0;
+	if (!writeIntToTextFile(pAnimal->type, fp, "Error writing gender type to text file\n"))
+		return 0;
+	if (!writeFloatToTextFile(pAnimal->price, fp, "Error writing price to text file\n"))
+		return 0;
+	if (!saveDateToTextFile(&pAnimal->birth, fp))
+		return 0;
+	if (!saveCategoryToTextFile(pAnimal->pCategory, fp))
+		return 0;
+	if (!saveCertificateToTextFile(&pAnimal->cer, fp))
+		return 0;
+	if (!saveReviewArrToTextFile(pAnimal, fp, "Error writing reviews to text file\n"))
+		return 0;
+	return 1;
+}
+
+int	loadAnimalFromTextFile(Animal* pAnimal, FILE* fp)
+{
+	pAnimal->name = readDynStringFromTextFile(fp);
+	if (!readIntFromTextFile(pAnimal->type, fp, "Error reading gender type from text file\n"))
+		return 0;
+	if (!readfloatFromTextFile(&pAnimal->price, fp, "Error reading price from text file\n"))
+		return 0;
+	if (!loadDateFromTextFile(&pAnimal->birth, fp))
+		return 0;
+	if (!loadCategoryFromTextFile(pAnimal->pCategory, fp))
+		return 0;
+	if (!loadCertificateFromTextFile(&pAnimal->cer, fp))
+		return 0;
+	if (!loadReviewArrFromTextFile(pAnimal, fp, "Error reading reviews from text file\n"))
+		return 0;
+	return 1;
+}
+
+int	saveAnimalToBinaryFile(const Animal* pAnimal, FILE* fp)
+{
+	if (!writeStringToFile(pAnimal->name, fp, "Error writing name to binary file\n"))
+		return 0;
+	if (!writeIntToFile(pAnimal->type, fp, "Error writing gender type to binary file\n"))
+		return 0;
+	if (!writeFloatToFile(pAnimal->price, fp, "Error writing price to text file\n"))
+		return 0;
+	if (!saveDateToTextFile(&pAnimal->birth, fp))
+		return 0;
+	if (!saveCategoryToTextFile(pAnimal->pCategory, fp))
+		return 0;
+	if (!saveCertificateToTextFile(&pAnimal->cer, fp))
+		return 0;
+	if (!saveReviewArrToTextFile(pAnimal, fp, "Error writing reviews to text file\n"))
+		return 0;
+	return 1;
+}
+
+int	loadAnimalFromBinaryFile(Animal* pAnimal, FILE* fp)
+{
+	if (!readStringFromFile(pAnimal->name, fp, "Error reading name from binary file\n"))
+		return 0;
+	if (!readIntFromFile(pAnimal->type, fp, "Error reading gender type from binary file\n"))
+		return 0;
+	if (!readFloatFromFile(&pAnimal->price, fp, "Error reading price from binary file\n"))
+		return 0;
+	if (!loadDateFromBinaryFile(&pAnimal->birth, fp))
+		return 0;
+	if (!loadCategoryFromBinaryFile(pAnimal->pCategory, fp))
+		return 0;
+	if (!loadCertificateFromBinaryFile(&pAnimal->cer, fp))
+		return 0;
+	if (!loadReviewArrFromBinaryFile(pAnimal, fp, "Error reading reviews from binary file\n"))
+		return 0;
+	return 1;
+}
+
+int	createReviewArr(Animal* pAnimal)
+{
+	pAnimal->reviewArr = (Review*)malloc(pAnimal->reviewCount * sizeof(Review));
+	if (!pAnimal->reviewArr)
+	{
+		printf("Alocation error for reviews\n");
+		return 0;
+	}
+	return 1;
+}
+
+int	saveReviewArrToTextFile(Animal* pAnimal, FILE* fp, const char* msg)
+{
+	if (!generalSaveLoadArrFile(pAnimal->reviewArr, pAnimal->reviewCount, sizeof(Review*), fp, saveReviewToTextFile))
+	{
+		puts(msg);
+		return 0;
+	}
+	return 1;
+
+}
+
+int	loadReviewArrFromTextFile(Animal* pAnimal, FILE* fp, const char* msg)
+{
+	if (!generalSaveLoadArrFile(pAnimal->reviewArr, pAnimal->reviewCount, sizeof(Review*), fp, loadReviewFromTextFile))
+	{
+		puts(msg);
+		return 0;
+	}
+	return 1;
+}
+
+int	saveReviewArrToBinaryFile(Animal* pAnimal, FILE* fp, const char* msg)
+{
+	if (!generalSaveLoadArrFile(pAnimal->reviewArr, pAnimal->reviewCount, sizeof(Review*), fp, saveReviewToBinaryFile))
+	{
+		puts(msg);
+		return 0;
+	}
+	return 1;
+}
+
+int	loadReviewArrFromBinaryFile(Animal* pAnimal, FILE* fp, const char* msg)
+{
+	if (!generalSaveLoadArrFile(pAnimal->reviewArr, pAnimal->reviewCount, sizeof(Review*), fp, loadReviewFromBinaryFile))
+	{
+		puts(msg);
+		return 0;
+	}
+	return 1;
+}
+
 void printAnimal(const  void* val)
 {
-	const Animal* pAnimal = (const Animal*)val;
+	const Animal* pAnimal = *(const Animal**)val;
 	printf("Animal name: %s\n", pAnimal->name);
 	printf("Animal gender: %s\n", GenderTypeStr[pAnimal->type]);
 	printf("Animal price: %.2f\n", pAnimal->price);

@@ -2,7 +2,6 @@
 #include <string.h>
 #include <stdlib.h>
 #include <time.h>
-#include "General.h"
 #include "Date.h"
 
 const int DAY_MONTHS[12] = { 31,28,31,30,31,30,31,31,30,31,30,31 };
@@ -25,7 +24,6 @@ void getCorrectDate(Date* pDate)
 
 void	generateCurrentDate(Date* pDate)
 {
-	Date date = *(pDate);
 	time_t currentTime;
 	struct tm* localTime;
 
@@ -34,9 +32,9 @@ void	generateCurrentDate(Date* pDate)
 	localTime = localtime(&currentTime);
 
 	// Assign current date components
-	date.day = localTime->tm_mday;
-	date.month = localTime->tm_mon + 1; // Months are zero-based
-	date.year = localTime->tm_year + 1900; // Years since 1900
+	pDate->day = localTime->tm_mday;
+	pDate->month = localTime->tm_mon + 1; // Months are zero-based
+	pDate->year = localTime->tm_year + 1900; // Years since 1900
 }
 
 int	 checkDate(char* date, Date* pDate)
@@ -58,6 +56,50 @@ int	 checkDate(char* date, Date* pDate)
 	pDate->month = month;
 	pDate->year = year;
 
+	return 1;
+}
+
+int		saveDateToTextFile(const Date* pDate, FILE* fp)
+{
+	if (!writeIntToTextFile(pDate->day, fp, "Error writing day to text file\n"))
+		return 0;
+	if (!writeIntToTextFile(pDate->month, fp, "Error writing month to text file\n"))
+		return 0;
+	if (!writeIntToTextFile(pDate->year, fp, "Error writing year to text file\n"))
+		return 0;
+	return 1;
+}
+
+int		loadDateFromTextFile(Date* pDate, FILE* fp)
+{
+	if (!readIntFromTextFile(pDate->day, fp, "Error reading day from text file\n"))
+		return 0;
+	if (!readIntFromTextFile(pDate->month, fp, "Error reading month from text file\n"))
+		return 0;
+	if (!readIntFromTextFile(pDate->year, fp, "Error reading year from text file\n"))
+		return 0;
+	return 1;
+}
+
+int		saveDateToBinaryFile(const Date* pDate, FILE* fp)
+{
+	if (!writeIntToFile(pDate->day, fp, "Error writing day to binary file\n"))
+		return 0;
+	if (!writeIntToFile(pDate->month, fp, "Error writing month to binary file\n"))
+		return 0;
+	if (!writeIntToFile(pDate->year, fp, "Error writing year to binary file\n"))
+		return 0;
+	return 1;
+}
+
+int		loadDateFromBinaryFile(Date* pDate, FILE* fp)
+{
+	if (!readIntFromFile(pDate->day, fp, "Error reading day from binary file\n"))
+		return 0;
+	if (!readIntFromFile(pDate->month, fp, "Error reading month from binary file\n"))
+		return 0;
+	if (!readIntFromFile(pDate->year, fp, "Error reading year from binary file\n"))
+		return 0;
 	return 1;
 }
 

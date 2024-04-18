@@ -1,6 +1,9 @@
 #ifndef __DISCOUNT__
 #define __DISCOUNT__
 
+#include "General.h"
+#include "FileHelper.h"
+
 #define LEN 6
 
 typedef struct
@@ -12,6 +15,14 @@ typedef struct
 int initDiscountWithoutACode(Discount* pDis);
 void getDiscountCode(char* code);
 int getDiscountPercent(Discount* pDis);
+
+// FILE FUNCTIONS
+int	saveDiscountToTextFile(const Discount* pDis, FILE* fp);
+int	loadDiscountFromTextFile(Discount* pDis, FILE* fp);
+int	saveDiscountToBinaryFileCompressed(const Discount* pDis, FILE* fp);
+int	loadDiscountFromBinaryFileCompressed(Discount* pDis, FILE* fp);
+
+// PRINT FUNCTION
 void printDiscount(const Discount* pDis);
 
 #endif // !__DISCOUNT__

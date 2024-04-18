@@ -3,7 +3,6 @@
 #include <time.h>   // For time
 #include <stdio.h>
 #include "Store.h"
-#include "General.h"
 
 int initStore(Store* pStore, int storeNumber)
 {
@@ -25,7 +24,7 @@ int addAnimal(Store* pStore, Category* pCategory)
 	if (!pCertificate)
 		return 0;
 	int certificateAnimalId = generateCertificateId(pStore);
-	if (!initCertificate(pCertificate, certificateAnimalId));
+	if (!initCertificate(pCertificate, certificateAnimalId))
 	{
 		freeCertificate(pCertificate); //will free also pStore
 		return 0;
@@ -104,6 +103,7 @@ void printStore(const  void* val)
 {
 	const Store* pStore = (const Store*)val;
 	printf("Store number: %d\n", pStore->storeNumber);
+	printf("City: %s\n", pStore->city);
 	printf("\n -------- Has %d Animals\n", pStore->animalCount);
 	printAnimalsArr(pStore->animalArr, pStore->animalCount);
 }
@@ -112,6 +112,7 @@ void printStoreInShort(const void* val)
 {
 	const Store* pStore = (const Store*)val;
 	printf("Store number: %d\n", pStore->storeNumber);
+	printf("City: %s\n", pStore->city);
 }
 
 void printAnimalsArr(Animal** arr, int size)

@@ -1,5 +1,4 @@
 #include "Review.h"
-#include "General.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -10,6 +9,41 @@ int initReview(Review* pRev)
 	if (!pRev->comment)
 		return 0;
 	generateCurrentDate(&pRev->date);
+	return 1;
+}
+
+int	saveReviewToTextFile(const Review* pRev, FILE* fp)
+{
+	if (!writeStringToTextFile(pRev->comment, fp, "Error writing comment to text file\n"))
+		return 0;
+	if (!saveDateToTextFile(&pRev->date, fp))
+		return 0;
+	return 1;
+}
+
+int	loadReviewFromTextFile(Review* pRev, FILE* fp)
+{
+	pRev->comment = readDynStringFromTextFile(fp);
+	if (!loadDateFromTextFile(&pRev->date, fp))
+		return 0;
+	return 1;
+}
+
+int	saveReviewToBinaryFile(const Review* pRev, FILE* fp)
+{
+	if (!writeStringToFile(pRev->comment, fp, "Error writing comment to binary file\n"))
+		return 0;
+	if (!saveDateToBinaryFile(&pRev->date, fp))
+		return 0;
+	return 1;
+}
+
+int	loadReviewFromBinaryFile(Review* pRev, FILE* fp)
+{
+	pRev->comment = readStringFromFile(fp, "Error reading comment from binary file\n");
+	if (!loadDateFromBinaryFile(&pRev->date, fp))
+		return 0;
+	return 1;
 }
 
 void printReview(const void* val)

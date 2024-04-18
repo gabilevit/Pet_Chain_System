@@ -145,8 +145,10 @@
     <ClInclude Include="Date.h" />
     <ClInclude Include="def.h" />
     <ClInclude Include="Discount.h" />
+    <ClInclude Include="FileHelper.h" />
     <ClInclude Include="General.h" />
     <ClInclude Include="List.h" />
+    <ClInclude Include="main.h" />
     <ClInclude Include="Review.h" />
     <ClInclude Include="Store.h" />
     <ClInclude Include="StoreManager.h" />
@@ -157,6 +159,7 @@
     <ClCompile Include="Certificate.c" />
     <ClCompile Include="Date.c" />
     <ClCompile Include="Discount.c" />
+    <ClCompile Include="FileHelper.c" />
     <ClCompile Include="General.c" />
     <ClCompile Include="List.c" />
     <ClCompile Include="main.c" />

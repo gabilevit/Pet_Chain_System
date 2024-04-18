@@ -18,8 +18,7 @@ int addStore(StoreManager* pManager)
 	Store* pStore = (Store*)calloc(1, sizeof(Store));
 	if (!pStore)
 		return 0;
-	int test = initStore(pStore, storeNumber);
-	if (!test);
+	if (!initStore(pStore, storeNumber))
 	{
 		freeStore(pStore); //will free also pStore
 		return 0;
@@ -97,14 +96,13 @@ Store* findStore(StoreManager* pManager, const int storeNumber)
 
 Store* enterTheStore(StoreManager* pManager)
 {
-	for (int i = 0; i < getStoreCount(pManager); i++)
-	{
-		NODE* current = pManager->storeList.head.next; //first Node
-		while (current != NULL) {
-			Store* storeShow = (Store*)current->key;
-			printStoreInShort(storeShow);
-			current = current->next;
-		}
+	int count = getStoreCount(pManager);
+	printf("There are %d stores\n", count);
+	NODE* current = pManager->storeList.head.next; //first Node
+	while (current != NULL) {
+		Store* storeShow = (Store*)current->key;
+		printStoreInShort(storeShow);
+		current = current->next;
 	}
 	int storeNum;
 	printf("Enter the store number: ");
@@ -118,7 +116,7 @@ Store* enterTheStore(StoreManager* pManager)
 void printStores(const StoreManager* pManager)
 {
 	int count = getStoreCount(pManager);
-	printf("there are %d stores\n", count);
+	printf("There are %d stores\n", count);
 	L_print(&pManager->storeList, printStore);
 }
 
