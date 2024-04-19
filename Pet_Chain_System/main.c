@@ -9,12 +9,12 @@ int main()
 	Category* dogCategory = (Category*)calloc(1, sizeof(Category));
 	Category* catCategory = (Category*)calloc(1, sizeof(Category));
 	Category* birdCategory = (Category*)calloc(1, sizeof(Category));
+	Category* chosenCategory;
 	init3CategoriesHardCoded(dogCategory, catCategory, birdCategory);
-	initManager(&manager);
+	//initManager(&manager);
 	loadSystem(&manager);
 	int option;
 	int stop = 0;
-
 
 	do
 	{
@@ -32,6 +32,12 @@ int main()
 			if (!theStore)
 				break;
 			storeLobby(theStore, dogCategory, catCategory, birdCategory);
+			break;
+
+		case eAddDiscount:
+			chosenCategory = getSpecificCategory(getCategoryType(), dogCategory, catCategory, birdCategory);
+			if (!addDiscountOrUpdateDiscount(chosenCategory))
+				printf("Error adding a discount\n");
 			break;
 
 		case ePrintStores:
@@ -78,12 +84,6 @@ void storeLobby(Store* pStore, Category* cat1, Category* cat2, Category* cat3) {
 				break;
 			if (!addReview(chosenAnimal))
 				printf("Error adding a review\n");
-			break;
-
-		case eAddDiscount:
-			chosenCategory = getSpecificCategory(getCategoryType(), cat1, cat2, cat3);
-			if (!addDiscountOrUpdateDiscount(chosenCategory))
-				printf("Error adding a discount\n");
 			break;
 
 		case eSortAnimals:

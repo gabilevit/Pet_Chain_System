@@ -6,6 +6,8 @@
 
 #define LEN 6
 
+typedef unsigned char BYTE;
+
 typedef struct
 {
 	char discountCode[LEN + 1];

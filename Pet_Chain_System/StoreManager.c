@@ -139,8 +139,8 @@ int	saveManagerToTextFile(const StoreManager* pManager, const char* fileName)
 		printf("Error open store manager file to write\n");
 		return 0;
 	}
-	if (!writeStringToTextFile(pManager->chainName, fp, "Error writing chain name to text file\n"))
-		return 0;
+	/*if (!writeStringToTextFile(pManager->chainName, fp, "Error writing chain name to text file\n"))
+		return 0;*/
 	int count = getStoreCount(pManager);
 	fprintf(fp, "%d\n", count);
 	if (count > 0)
@@ -167,6 +167,7 @@ int	saveManagerToTextFile(const StoreManager* pManager, const char* fileName)
 
 int	loadManagerFromTextFile(StoreManager* pManager, const char* fileName)
 {
+	strcpy(pManager->chainName, "Gabi & Bens PetShop chain");
 	FILE* fp;
 
 	fp = fopen(fileName, "r");
@@ -175,7 +176,7 @@ int	loadManagerFromTextFile(StoreManager* pManager, const char* fileName)
 		printf("Error open store manager file to read\n");
 		return 0;
 	}
-	myGets(pManager->chainName, NAME, fp);
+	//myGets(pManager->chainName, NAME, fp);
 	L_init(&pManager->storeList);
 	int count;
 	fscanf(fp, "%d", &count);
@@ -209,10 +210,12 @@ int	saveManagerToBinaryFile(const StoreManager* pManager, const char* fileName)
 		printf("Error open store manager file to write\n");
 		return 0;
 	}
-	if (!writeStringToTextFile(pManager->chainName, fp, "Error writing chain name to binary file\n"))
-		return 0;
+	/*if (!writeStringToTextFile(pManager->chainName, fp, "Error writing chain name to binary file\n"))
+		return 0;*/
 	int count = getStoreCount(pManager);
-	fprintf(fp, "%d\n", count);
+	if (!writeIntToFile(count, fp, "Error writing number of stores to file\n"))
+		return 0;
+	//fprintf(fp, "%d\n", count);
 	if (count > 0)
 	{
 		NODE* pN = pManager->storeList.head.next; //first Node
@@ -221,7 +224,7 @@ int	saveManagerToBinaryFile(const StoreManager* pManager, const char* fileName)
 		while (pN != NULL)
 		{
 			pTemp = (Store*)pN->key;
-			if (!saveStoreToTextFile(pTemp, fp))
+			if (!saveStoreToBinaryFile(pTemp, fp))
 			{
 				printf("Error write store to text file\n");
 				fclose(fp);
@@ -237,12 +240,12 @@ int	saveManagerToBinaryFile(const StoreManager* pManager, const char* fileName)
 
 int loadStoreListFromBinaryFile(StoreManager* pManager, FILE* fp)
 {
-	int count = getStoreCount(pManager);
+	int count;
 	if (!readIntFromFile(&count, fp, "Error reading number of stores from binary file\n"))
 		return 0;
 	Store* pStore;
 	for (int i = 0; i < count; i++) {
-		pStore = (Store*)malloc(sizeof(Store));
+		pStore = (Store*)calloc(1, sizeof(Store));
 		if (!pStore) {
 			printf("Error allocating memory for store\n");
 			return 0;
@@ -260,6 +263,7 @@ int loadStoreListFromBinaryFile(StoreManager* pManager, FILE* fp)
 
 int	loadManagerFromBinaryFile(StoreManager* pManager, const char* fileName)
 {
+	strcpy(pManager->chainName, "Gabi & Bens PetShop chain");
 	FILE* fp;
 
 	fp = fopen(fileName, "rb");
@@ -268,8 +272,8 @@ int	loadManagerFromBinaryFile(StoreManager* pManager, const char* fileName)
 		printf("Error open store manager file to read\n");
 		return 0;
 	}
-
-	myGets(pManager->chainName, NAME, fp);
+	L_init(&pManager->storeList);
+	//myGets(pManager->chainName, NAME, fp);
 	if (!loadStoreListFromBinaryFile(pManager, fp))
 		return 0;
 	return 1;

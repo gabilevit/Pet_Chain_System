@@ -124,7 +124,7 @@ int		loadDateFromBinaryFile(Date* pDate, FILE* fp)
 
 void printDate(const Date* pDate)
 {
-	printf("Date: %d/%d/%d", pDate->day, pDate->month, pDate->year);
+	printf("Date: %d/%d/%d\n", pDate->day, pDate->month, pDate->year);
 }
 
 int saveDateToFile(FILE* f, Date* pDate)

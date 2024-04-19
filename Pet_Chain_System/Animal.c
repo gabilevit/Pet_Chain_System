@@ -31,7 +31,7 @@ eGenderType getgenderType()
 	return (eGenderType)option;
 }
 
-getPrice(Animal* pAnimal)
+int getPrice(Animal* pAnimal)
 {
 	printf("\nEnter the cost of the pet: ");
 	float price;
@@ -173,9 +173,9 @@ int	createReviewArr(Animal* pAnimal)
 	return 1;
 }
 
-int	saveReviewArrToTextFile(Animal* pAnimal, FILE* fp, const char* msg)
+int	saveReviewArrToTextFile(const Animal* pAnimal, FILE* fp, const char* msg)
 {
-	if (!generalSaveLoadArrFile(pAnimal->reviewArr, pAnimal->reviewCount, sizeof(Review*), fp, saveReviewToTextFile))
+	if (!generalSaveLoadArrFile(pAnimal->reviewArr, pAnimal->reviewCount, sizeof(Review), fp, saveReviewToTextFile))
 	{
 		puts(msg);
 		return 0;
@@ -194,7 +194,7 @@ int	loadReviewArrFromTextFile(Animal* pAnimal, FILE* fp, const char* msg)
 	return 1;
 }
 
-int	saveReviewArrToBinaryFile(Animal* pAnimal, FILE* fp, const char* msg)
+int	saveReviewArrToBinaryFile(const Animal* pAnimal, FILE* fp, const char* msg)
 {
 	if (!generalSaveLoadArrFile(pAnimal->reviewArr, pAnimal->reviewCount, sizeof(Review*), fp, saveReviewToBinaryFile))
 	{
@@ -238,7 +238,7 @@ void printAnimal(const  void* val)
 
 void printReviewArr(Review* arr, int size)
 {
-	generalArrayFunction(arr, size, sizeof(Review*), printReview);
+	generalArrayFunction(arr, size, sizeof(Review), printReview);
 }
 
 void freeAnimal(void* pAnimal)

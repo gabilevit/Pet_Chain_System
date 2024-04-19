@@ -28,7 +28,7 @@ int	saveCertificateToTextFile(const Certificate* pCer, FILE* fp)
 
 int	loadCertificateFromTextFile(Certificate* pCer, FILE* fp)
 {
-	if (!readIntFromTextFile(pCer->animalCertificateId, fp, "Error reading id from text file\n"))
+	if (!readIntFromTextFile(&pCer->animalCertificateId, fp, "Error reading id from text file\n"))
 		return 0;
 	pCer->countryOfOrigin = readDynStringFromTextFile(fp);
 	pCer->animalDescription = readDynStringFromTextFile(fp);

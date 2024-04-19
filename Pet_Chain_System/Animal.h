@@ -29,6 +29,7 @@ typedef struct
 
 void initAnimal(Animal* pAnimal, Category* pCategory, Certificate* pCertificate);
 eGenderType getgenderType();
+int getPrice(Animal* pAnimal);
 int addReview(Animal* pAnimal);
 
 // COMPARE FUNCTIONS
@@ -42,9 +43,9 @@ int	loadAnimalFromTextFile(Animal* pAnimal, FILE* fp);
 int	saveAnimalToBinaryFile(const Animal* pAnimal, FILE* fp);
 int	loadAnimalFromBinaryFile(Animal* pAnimal, FILE* fp);
 int	createReviewArr(Animal* pAnimal);
-int	saveReviewArrToTextFile(Animal* pAnimal, FILE* fp, const char* msg);
+int	saveReviewArrToTextFile(const Animal* pAnimal, FILE* fp, const char* msg);
 int	loadReviewArrFromTextFile(Animal* pAnimal, FILE* fp, const char* msg);
-int	saveReviewArrToBinaryFile(Animal* pAnimal, FILE* fp, const char* msg);
+int	saveReviewArrToBinaryFile(const Animal* pAnimal, FILE* fp, const char* msg);
 int	loadReviewArrFromBinaryFile(Animal* pAnimal, FILE* fp, const char* msg);
 
 // PRINT FUNCTIONS

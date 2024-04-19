@@ -22,6 +22,7 @@ int	loadCertificateFromTextFile(Certificate* pCer, FILE* fp);
 int	saveCertificateToBinaryFile(const Certificate* pCer, FILE* fp);
 int	loadCertificateFromBinaryFile(Certificate* pCer, FILE* fp);
 
+
 // PRINT FUNCTION
 void printCertificate(const Certificate* pCer);
 

@@ -11,23 +11,22 @@ typedef enum
 
 typedef enum
 {
-	eAddStore, eEnterStore, ePrintStores, eNofOptionsInMain
+	eAddStore, eEnterStore, eAddDiscount, ePrintStores, eNofOptionsInMain
 } eMainMenuOptions;
 
 typedef enum
 {
-	eAddAnimal, eAddReview, eAddDiscount, eSortAnimals,
+	eAddAnimal, eAddReview, eSortAnimals,
 	eFindAnimal, /*eFindPopularAnimal, eFindExpensiveAnimal, */eNoOptionsInStoreMenu
 } eStoreMenu;
 
 
 const char* str1[eNofOptionsInMain] = { "Upload system from text file", "Upload system from binary file"};
 
-const char* str2[eNofOptionsInMain] = { "Add Store", "Enter a store", "Print all stores"
-										"Find store with most animals" };
+const char* str2[eNofOptionsInMain] = { "Add Store", "Enter a store", "Add/Update a discount to a specific category", 
+										"Print all stores"/*, "Find store with most animals" */};
 
 const char* str3[eNoOptionsInStoreMenu] = { "Add Animal","Add a review",
-										"Add/Update a discount to a specific category",
 	"Sort Animals", "Find Animal"/*, "Find most popular animal",
 	"Find most expensive animal in store"*/ };
 

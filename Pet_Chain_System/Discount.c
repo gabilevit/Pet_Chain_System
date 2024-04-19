@@ -52,9 +52,8 @@ int getDiscountPercent(Discount* pDis)
 	int discountPercent;
 	do {
 		scanf("%d", &discountPercent);
-		if (discountPercent <= 5 || discountPercent >= 70) {
-			printf("The discount cant be less then 5% or greater than 70%, try again.\n");
-		}
+		if (discountPercent <= 5 || discountPercent >= 70) 
+			puts("The discount cant be less then 5% or greater than 70%, try again.\n");
 	} while (discountPercent <= 5 || discountPercent >= 70);
 	pDis->discountPercent = discountPercent;
 	return 1;
@@ -79,12 +78,34 @@ int	loadDiscountFromTextFile(Discount* pDis, FILE* fp)
 
 int	saveDiscountToBinaryFileCompressed(const Discount* pDis, FILE* fp)
 {
-
+	BYTE data[2] = { 0 };
+	int len = (int)strlen(pDis->discountCode);
+	data[0] =  len >> 1;
+	data[1] = (len & 0x1) << 7 | pDis->discountPercent;
+	if (fwrite(data, sizeof(BYTE), 2, fp) != 2) 
+	{
+		puts("Error writing date to file");
+		return 0;
+	}
+	if (!writeStringToFile(pDis->discountCode, fp, "Error writing discount code to binary file\n"))
+		return 0;
+	return 1;
 }
 
 int	loadDiscountFromBinaryFileCompressed(Discount* pDis, FILE* fp)
 {
-
+	if (!pDis)
+		return 0;
+	BYTE data[2];
+	if (fread(&data, sizeof(BYTE), 2, fp) != 2)
+	{
+		puts("Error writing date to file");
+		return 0;
+	}
+	int len = (data[0] << 1) & 0x7;
+	pDis->discountPercent = data[1] & 0x7F;
+	myGets(pDis->discountCode, MAX_STR_LEN, fp);
+	return 1;
 }
 
 void printDiscount(const Discount* pDis)

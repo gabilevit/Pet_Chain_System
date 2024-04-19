@@ -78,8 +78,11 @@ int	saveCategoryToTextFile(const Category* pCat, FILE* fp)
 {
 	if (!writeIntToTextFile(pCat->type, fp, "Error writing category type to text file\n"))
 		return 0;
-	if (!saveDiscountToTextFile(pCat->pDiscount, fp))
-		return 0;
+	if (pCat->pDiscount != NULL)
+	{
+		if (!saveDiscountToTextFile(pCat->pDiscount, fp))
+			return 0;
+	}
 	return 1;
 }
 
@@ -96,8 +99,11 @@ int	saveCategoryToBinaryFile(const Category* pCat, FILE* fp)
 {
 	if (!writeIntToFile(pCat->type, fp, "Error writing category type to binary file\n"))
 		return 0;
-	if (!saveDiscountToBinaryFileCompressed(pCat->pDiscount, fp))
-		return 0;
+	if (pCat->pDiscount != NULL)
+	{
+		if (!saveDiscountToBinaryFileCompressed(pCat->pDiscount, fp))
+			return 0;
+	}
 	return 1;
 }
 
