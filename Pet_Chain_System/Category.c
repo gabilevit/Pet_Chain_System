@@ -85,7 +85,7 @@ int	saveCategoryToTextFile(const Category* pCat, FILE* fp)
 
 int	loadCategoryFromTextFile(Category* pCat, FILE* fp)
 {
-	if (!readIntFromTextFile(pCat->type, fp, "Error reading category type from text file\n"))
+	if (!readIntFromTextFile(&pCat->type, fp, "Error reading category type from text file\n"))
 		return 0;
 	if (!loadDiscountFromTextFile(pCat->pDiscount, fp))
 		return 0;
@@ -103,7 +103,7 @@ int	saveCategoryToBinaryFile(const Category* pCat, FILE* fp)
 
 int	loadCategoryFromBinaryFile(Category* pCat, FILE* fp)
 {
-	if (!readIntFromFile(pCat->type, fp, "Error reading category type from binary file\n"))
+	if (!readIntFromFile(&pCat->type, fp, "Error reading category type from binary file\n"))
 		return 0;
 	if (!loadDiscountFromBinaryFileCompressed(pCat->pDiscount, fp))
 		return 0;

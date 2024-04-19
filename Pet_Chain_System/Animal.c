@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 #include "Animal.h"
 
 void initAnimal(Animal* pAnimal, Category* pCategory, Certificate* pCertificate)
@@ -41,6 +42,7 @@ getPrice(Animal* pAnimal)
 		}
 	} while (price <= 10);
 	pAnimal->price = price;
+	return 1;
 }
 
 int addReview(Animal* pAnimal)
@@ -56,6 +58,32 @@ int addReview(Animal* pAnimal)
 	
 	pAnimal->reviewCount++;
 	return 1;
+}
+
+int compareAnimalByName(const void* animal1, const void* animal2)
+{
+	const Animal* pAnimal1 = *(const Animal**)animal1;
+	const Animal* pAnimal2 = *(const Animal**)animal2;
+	return strcmp(pAnimal1->name, pAnimal2->name);
+}
+
+int compareAnimalByPrice(const void* animal1, const void* animal2)
+{
+	const Animal* pAnimal1 = *(const Animal**)animal1;
+	const Animal* pAnimal2 = *(const Animal**)animal2;
+	if (pAnimal1->price > pAnimal2->price)
+		return 1;
+	if (pAnimal1->price < pAnimal2->price)
+		return -1;
+	return 0;
+}
+
+int compareAnimalByBirthDate(const void* animal1, const void* animal2)
+{
+	const Animal* pAnimal1 = *(const Animal**)animal1;
+	const Animal* pAnimal2 = *(const Animal**)animal2;
+	return compareDate(&pAnimal1->birth, &pAnimal2->birth);
+	return 0;
 }
 
 int	saveAnimalToTextFile(const Animal* pAnimal, FILE* fp)
@@ -80,7 +108,7 @@ int	saveAnimalToTextFile(const Animal* pAnimal, FILE* fp)
 int	loadAnimalFromTextFile(Animal* pAnimal, FILE* fp)
 {
 	pAnimal->name = readDynStringFromTextFile(fp);
-	if (!readIntFromTextFile(pAnimal->type, fp, "Error reading gender type from text file\n"))
+	if (!readIntFromTextFile(&pAnimal->type, fp, "Error reading gender type from text file\n"))
 		return 0;
 	if (!readfloatFromTextFile(&pAnimal->price, fp, "Error reading price from text file\n"))
 		return 0;
@@ -116,9 +144,8 @@ int	saveAnimalToBinaryFile(const Animal* pAnimal, FILE* fp)
 
 int	loadAnimalFromBinaryFile(Animal* pAnimal, FILE* fp)
 {
-	if (!readStringFromFile(pAnimal->name, fp, "Error reading name from binary file\n"))
-		return 0;
-	if (!readIntFromFile(pAnimal->type, fp, "Error reading gender type from binary file\n"))
+	pAnimal->name = readStringFromFile(fp, "Error reading name from binary file\n");
+	if (!readIntFromFile(&pAnimal->type, fp, "Error reading gender type from binary file\n"))
 		return 0;
 	if (!readFloatFromFile(&pAnimal->price, fp, "Error reading price from binary file\n"))
 		return 0;
@@ -127,6 +154,8 @@ int	loadAnimalFromBinaryFile(Animal* pAnimal, FILE* fp)
 	if (!loadCategoryFromBinaryFile(pAnimal->pCategory, fp))
 		return 0;
 	if (!loadCertificateFromBinaryFile(&pAnimal->cer, fp))
+		return 0;
+	if (!createReviewArr(pAnimal))
 		return 0;
 	if (!loadReviewArrFromBinaryFile(pAnimal, fp, "Error reading reviews from binary file\n"))
 		return 0;

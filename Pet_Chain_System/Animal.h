@@ -31,6 +31,11 @@ void initAnimal(Animal* pAnimal, Category* pCategory, Certificate* pCertificate)
 eGenderType getgenderType();
 int addReview(Animal* pAnimal);
 
+// COMPARE FUNCTIONS
+int compareAnimalByName(const void* animal1, const void* animal2);
+int compareAnimalByPrice(const void* animal1, const void* animal2);
+int compareAnimalByBirthDate(const void* animal1, const void* animal2);
+
 // FILE FUNCTIONS
 int	saveAnimalToTextFile(const Animal* pAnimal, FILE* fp);
 int	loadAnimalFromTextFile(Animal* pAnimal, FILE* fp);

@@ -11,7 +11,7 @@ char* getStrExactName(const char* msg)
 	char* str;
 	char temp[MAX_STR_LEN];
 	printf("%s\t", msg);
-	myGets(temp, MAX_STR_LEN);
+	myGets(temp, MAX_STR_LEN, stdin);
 
 	str = getDynStr(temp);
 	return str;
@@ -28,13 +28,15 @@ char* getDynStr(char* str)
 	return theStr;
 }
 
-char* myGets(char* buffer, int size)
+
+
+char* myGets(char* buffer, int size, FILE* source)
 {
 	char* ok;
 	if (buffer != NULL && size > 0)
 	{
-		do { //skip only '\n' strings
-			ok = fgets(buffer, size, stdin);
+		do {
+			ok = fgets(buffer, size, source);
 		} while (ok && ((strlen(buffer) <= 1) && (isspace(buffer[0]))));
 		if (ok)
 		{

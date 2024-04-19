@@ -99,6 +99,202 @@ Certificate* findCertificateByAnimalId(Store* pStore, int id)
 	return NULL;
 }
 
+void sortAnimals(Store* pStore)
+{
+	pStore->animalSortOpt = showSortMenu();
+	int(*compare)(const void* air1, const void* air2) = NULL;
+
+	switch (pStore->animalSortOpt)
+	{
+	case eName:
+		compare = compareAnimalByName;
+		break;
+	case ePrice:
+		compare = compareAnimalByPrice;
+		break;
+	case eBirth:
+		compare = compareAnimalByBirthDate;
+		break;
+	}
+
+	if (compare != NULL)
+		qsort(pStore->animalArr, pStore->animalCount, sizeof(Animal*), compare);
+}
+
+void findAnimalWithBsearch(const Store* pStore)
+{
+	int(*compare)(const void* air1, const void* air2) = NULL;
+	Animal f = { 0 };
+	Animal* pAnimal = &f;
+
+	switch (pStore->animalSortOpt)
+	{
+	case eName:
+		pAnimal->name = getStrExactName("Enter the name of the animal: ");
+		compare = compareAnimalByName;
+		break;
+
+	case ePrice:
+		printf("Enter animals price:\n");
+		scanf("%f", &f.price);
+		compare = compareAnimalByPrice;
+		break;
+
+	case eBirth:
+		getCorrectDate(&f.birth);
+		compare = compareAnimalByBirthDate;
+		break;
+
+	}
+
+	if (compare != NULL)
+	{
+		Animal** pF = bsearch(&pAnimal, pStore->animalArr, pStore->animalCount, sizeof(Animal*), compare);
+		if (pF == NULL)
+			printf("Animal was not found\n");
+		else {
+			printf("Animal found, ");
+			printAnimal(*pF);
+		}
+	}
+	else {
+		printf("The search cannot be performed, array not sorted\n");
+	}
+}
+
+eSortOption showSortMenu()
+{
+	int opt;
+	printf("Base on what field do you want to sort?\n");
+	do {
+		for (int i = 1; i < eNofSortOpt; i++)
+			printf("Enter %d for %s\n", i, sortOptStr[i]);
+		scanf("%d", &opt);
+	} while (opt < 0 || opt >= eNofSortOpt);
+
+	return (eSortOption)opt;
+}
+
+int	saveStoreToTextFile(const Store* pStore, FILE* fp)
+{
+	if (!writeIntToTextFile(pStore->storeNumber, fp, "Error writing store number to text file\n"))
+		return 0;
+	if (!writeStringToTextFile(pStore->city, fp, "Error writing city to text file\n"))
+		return 0;
+	if (!saveAnimalArrToTextFile(pStore, fp, "Error writing animals to text file\n"))
+		return 0;
+	return 1;
+}
+
+int	loadStoreFromTextFile(Store* pStore, FILE* fp)
+{
+	if (!readIntFromTextFile(&pStore->storeNumber, fp, "Error reading store number from text file\n"))
+		return 0;
+	pStore->city = readDynStringFromTextFile(fp);
+	if (!loadAnimalArrFromTextFile(pStore, fp, "Error reading animals from text file\n"))
+		return 0;
+	return 1;
+}
+
+int	saveStoreToBinaryFile(const Store* pStore, FILE* fp)
+{
+	if (!writeIntToFile(pStore->storeNumber, fp, "Error writing store number to binary file\n"))
+		return 0;
+	if (!writeStringToFile(pStore->city, fp, "Error writing city to binary file\n"))
+		return 0;
+	if (!saveAnimalArrToBinaryFile(pStore, fp, "Error writing animals to binary file\n"))
+		return 0;
+	return 1;
+}
+
+int	loadStoreFromBinaryFile(Store* pStore, FILE* fp)
+{
+	if (!readIntFromFile(&pStore->storeNumber, fp, "Error reading store number from binary file\n"))
+		return 0;
+	pStore->city = readStringFromFile(fp, "Error reading city from binary file\n");
+	if(!loadAnimalArrFromBinaryFile(pStore, fp, "Error reading animals from binary file\n"))
+		return 0;
+	return 1;
+}
+
+int	createAnimalArr(Store* pStore)
+{
+	if (pStore->animalCount > 0)
+	{
+		pStore->animalArr = (Animal**)malloc(pStore->animalCount * sizeof(Animal*));
+		if (!pStore->animalCount)
+		{
+			printf("Alocation error for animals\n");
+			return 0;
+		}
+	}
+	else
+		pStore->animalArr = NULL;
+
+	for (int i = 0; i < pStore->animalCount; i++)
+	{
+		pStore->animalArr[i] = (Animal*)calloc(1, sizeof(Animal));
+		if (!pStore->animalArr[i])
+		{
+			printf("Alocation error for animal\n");
+			return 0;
+		}
+	}
+	return 1;
+}
+
+int	saveAnimalArrToTextFile(const Store* pStore, FILE* fp, const char* msg)
+{
+	for (int i = 0; i < pStore->animalCount; i++)
+	{
+		if (!generalSaveLoadArrFile(pStore->animalArr[i], pStore->animalCount, sizeof(Animal*), fp, saveAnimalToTextFile))
+		{
+			puts(msg);
+			return 0;
+		}
+	}
+	return 1;
+}
+
+int	loadAnimalArrFromTextFile(Store* pStore, FILE* fp, const char* msg)
+{
+	for (int i = 0; i < pStore->animalCount; i++)
+	{
+		if (!generalSaveLoadArrFile(pStore->animalArr[i], pStore->animalCount, sizeof(Animal*), fp, loadAnimalFromTextFile))
+		{
+			puts(msg);
+			return 0;
+		}
+	}
+	return 1;
+}
+
+int	saveAnimalArrToBinaryFile(const Store* pStore, FILE* fp, const char* msg)
+{
+	for (int i = 0; i < pStore->animalCount; i++)
+	{
+		if (!generalSaveLoadArrFile(pStore->animalArr[i], pStore->animalCount, sizeof(Animal*), fp, saveAnimalToBinaryFile))
+		{
+			puts(msg);
+			return 0;
+		}
+	}
+	return 1;
+}
+
+int	loadAnimalArrFromBinaryFile(Store* pStore, FILE* fp, const char* msg)
+{
+	for (int i = 0; i < pStore->animalCount; i++)
+	{
+		if (!generalSaveLoadArrFile(pStore->animalArr[i], pStore->animalCount, sizeof(Animal*), fp, loadAnimalFromBinaryFile))
+		{
+			puts(msg);
+			return 0;
+		}
+	}
+	return 1;
+}
+
 void printStore(const  void* val)
 {
 	const Store* pStore = (const Store*)val;

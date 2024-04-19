@@ -1,3 +1,2 @@
-﻿  StoreManager.c
-C:\Users\gabil\Afeka\Programing Systems With C\FinalProject\Pet_Chain_System\Pet_Chain_System\StoreManager.c(85,45): warning C4047: '!=': 'const int' differs in levels of indirection from 'void *'
+﻿  main.c
   Pet_Chain_System.vcxproj -> C:\Users\gabil\Afeka\Programing Systems With C\FinalProject\Pet_Chain_System\x64\Debug\Pet_Chain_System.exe

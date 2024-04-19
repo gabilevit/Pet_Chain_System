@@ -17,6 +17,9 @@ void	getCorrectDate(Date* pDate);
 void	generateCurrentDate(Date* pDate);
 int		checkDate(char* date, Date* pDate);
 
+// COMPARE FUNCTION
+int	compareDate(const void* d1, const void* d2);
+
 // FILE FUNCTIONS
 int		saveDateToTextFile(const Date* pDate, FILE* fp);
 int		loadDateFromTextFile(Date* pDate, FILE* fp);

@@ -15,7 +15,7 @@ void getCorrectDate(Date* pDate)
 	do {
 		printf("Enter birth Date dd%c%cmm%c%cyyyy  minimum year %d\t",
 			SPECIAL_TAV, SPECIAL_TAV, SPECIAL_TAV, SPECIAL_TAV, MIN_YEAR);
-		myGets(date, MAX_STR_LEN);
+		myGets(date, MAX_STR_LEN, stdin);
 		ok = checkDate(date, pDate);
 		if (!ok)
 			printf("Error try again\n");
@@ -59,6 +59,25 @@ int	 checkDate(char* date, Date* pDate)
 	return 1;
 }
 
+int	compareDate(const void* d1, const void* d2)
+{
+	const Date* pDate1 = (const Date*)d1;
+	const Date* pDate2 = (const Date*)d2;
+	if (pDate1->year > pDate2->year)
+		return 1;
+	if (pDate1->year < pDate2->year)
+		return -1;
+	if (pDate1->month > pDate2->month)
+		return 1;
+	if (pDate1->month < pDate2->month)
+		return -1;
+	if (pDate1->day > pDate2->day)
+		return 1;
+	if (pDate1->day < pDate2->day)
+		return -1;
+	return 0;
+}
+
 int		saveDateToTextFile(const Date* pDate, FILE* fp)
 {
 	if (!writeIntToTextFile(pDate->day, fp, "Error writing day to text file\n"))
@@ -72,11 +91,11 @@ int		saveDateToTextFile(const Date* pDate, FILE* fp)
 
 int		loadDateFromTextFile(Date* pDate, FILE* fp)
 {
-	if (!readIntFromTextFile(pDate->day, fp, "Error reading day from text file\n"))
+	if (!readIntFromTextFile(&pDate->day, fp, "Error reading day from text file\n"))
 		return 0;
-	if (!readIntFromTextFile(pDate->month, fp, "Error reading month from text file\n"))
+	if (!readIntFromTextFile(&pDate->month, fp, "Error reading month from text file\n"))
 		return 0;
-	if (!readIntFromTextFile(pDate->year, fp, "Error reading year from text file\n"))
+	if (!readIntFromTextFile(&pDate->year, fp, "Error reading year from text file\n"))
 		return 0;
 	return 1;
 }
@@ -94,11 +113,11 @@ int		saveDateToBinaryFile(const Date* pDate, FILE* fp)
 
 int		loadDateFromBinaryFile(Date* pDate, FILE* fp)
 {
-	if (!readIntFromFile(pDate->day, fp, "Error reading day from binary file\n"))
+	if (!readIntFromFile(&pDate->day, fp, "Error reading day from binary file\n"))
 		return 0;
-	if (!readIntFromFile(pDate->month, fp, "Error reading month from binary file\n"))
+	if (!readIntFromFile(&pDate->month, fp, "Error reading month from binary file\n"))
 		return 0;
-	if (!readIntFromFile(pDate->year, fp, "Error reading year from binary file\n"))
+	if (!readIntFromFile(&pDate->year, fp, "Error reading year from binary file\n"))
 		return 0;
 	return 1;
 }

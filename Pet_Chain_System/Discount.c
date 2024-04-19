@@ -5,7 +5,7 @@
 
 int initDiscountWithoutACode(Discount* pDis)
 {
-	getDiscountPercent(pDis);
+	return getDiscountPercent(pDis);
 }
 
 void getDiscountCode(char* code)
@@ -15,7 +15,7 @@ void getDiscountCode(char* code)
 	do {
 		ok = 1;
 		printf("Enter discount code  - %d SHOULD BE 4 UPPER CASE letters AND 2 digits\t", LEN);
-		myGets(temp, MAX_STR_LEN);
+		myGets(temp, MAX_STR_LEN, stdin);
 		if (strlen(temp) != LEN)
 		{
 			printf("code should be %d in lenght\n", LEN);
@@ -57,6 +57,7 @@ int getDiscountPercent(Discount* pDis)
 		}
 	} while (discountPercent <= 5 || discountPercent >= 70);
 	pDis->discountPercent = discountPercent;
+	return 1;
 }
 
 int	saveDiscountToTextFile(const Discount* pDis, FILE* fp)
@@ -70,8 +71,8 @@ int	saveDiscountToTextFile(const Discount* pDis, FILE* fp)
 
 int	loadDiscountFromTextFile(Discount* pDis, FILE* fp)
 {
-	myGets(pDis->discountCode, MAX_STR_LEN, fp);
-	if (!readIntFromTextFile(pDis->discountPercent, fp, "Error reading discount in percent from text file\n"))
+	myGets(pDis->discountCode, LEN, fp);
+	if (!readIntFromTextFile(&pDis->discountPercent, fp, "Error reading discount in percent from text file\n"))
 		return 0;
 	return 1;
 }

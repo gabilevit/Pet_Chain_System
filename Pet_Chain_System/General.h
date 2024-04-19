@@ -7,7 +7,7 @@
 
 
 char* getStrExactName(const char* msg);
-char* myGets(char* buffer, int size);
+char* myGets(char* buffer, int size, FILE* source);
 char* getDynStr(char* str);
 
 void generalArrayFunction(void* element, int size, int typeSize, void f(void* element));

@@ -15,15 +15,19 @@ typedef struct
 
 int initManager(StoreManager* pManager);
 int addStore(StoreManager* pManager);
+int	insertNewStoreToList(LIST* pStoreList, Store* pStore);
 int generateStoreNumber(StoreManager* pManager);
 int	getStoreCount(const StoreManager* pManager);
 Store* findStore(StoreManager* manager, const int storeNumber);
 Store* enterTheStore(StoreManager* pManager);
 
 // FILE FUNCTIONS
+void initManagerFromTextFile(StoreManager* storeManager, const char* fileName);
+void initManagerFromBinaryFile(StoreManager* storeManager, const char* fileName);
 int	saveManagerToTextFile(const StoreManager* pManager, const char* fileName);
 int	loadManagerFromTextFile(StoreManager* pManager, const char* fileName);
 int	saveManagerToBinaryFile(const StoreManager* pManager, const char* fileName);
+int loadStoreListFromBinaryFile(StoreManager* pManager, FILE* fp);
 int	loadManagerFromBinaryFile(StoreManager* pManager, const char* fileName);
 
 // PRINT FUNCTION

@@ -11,7 +11,7 @@ int main()
 	Category* birdCategory = (Category*)calloc(1, sizeof(Category));
 	init3CategoriesHardCoded(dogCategory, catCategory, birdCategory);
 	initManager(&manager);
-
+	loadSystem(&manager);
 	int option;
 	int stop = 0;
 
@@ -49,6 +49,8 @@ int main()
 		}
 	} while (!stop);
 
+	saveManagerToTextFile(&manager, MANAGER_TEXT_FILE);
+	saveManagerToBinaryFile(&manager, MANAGER_BINARY_FILE);
 	freeManager(&manager);
 
 	return 1;
@@ -84,15 +86,15 @@ void storeLobby(Store* pStore, Category* cat1, Category* cat2, Category* cat3) {
 				printf("Error adding a discount\n");
 			break;
 
-		/*case eSortAnimals:
-			sortFlight(&company);
+		case eSortAnimals:
+			sortAnimals(pStore);
 			break;
 
 		case eFindAnimal:
-			findFlight(&company);
+			findAnimalWithBsearch(pStore);
 			break;
 
-		case eFindPopularAnimal:
+		/*case eFindPopularAnimal:
 			findMostPopular();
 			break;
 
@@ -116,7 +118,7 @@ int menu()
 	int option;
 	printf("\n\n");
 	for (int i = 0; i < eNofOptionsInMain; i++)
-		printf("%d - %s\n", i, str1[i]);
+		printf("%d - %s\n", i, str2[i]);
 	printf("%d - Quit\n", EXIT);
 	scanf("%d", &option);
 	//clean buffer
@@ -125,12 +127,36 @@ int menu()
 	return option;
 }
 
+void loadSystem(StoreManager* pManager)
+{
+	int option;
+	printf("From which file type you want to upload the system?\n");
+	printf("\n\n");
+	for (int i = 0; i < eNofOptionsInFileType; i++)
+		printf("%d - %s\n", i, str1[i]);
+	printf("%d - Return to main menu\n", RETURN);
+	scanf("%d", &option);
+	//clean buffer
+	char tav;
+	scanf("%c", &tav);
+	switch (option)
+	{
+	case eUploadFromText:
+		initManagerFromTextFile(pManager, MANAGER_TEXT_FILE);
+		break;
+
+	case eUploadFromBinary:
+		initManagerFromBinaryFile(pManager, MANAGER_BINARY_FILE);
+		break;
+	}
+}
+
 int storeMenu()
 {
 	int option;
 	printf("\n\n");
 	for (int i = 0; i < eNoOptionsInStoreMenu; i++)
-		printf("%d - %s\n", i, str2[i]);
+		printf("%d - %s\n", i, str3[i]);
 	printf("%d - Return to main menu\n", RETURN);
 	scanf("%d", &option);
 	//clean buffer

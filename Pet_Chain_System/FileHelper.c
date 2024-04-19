@@ -1,5 +1,6 @@
 #include <stdio.h>
-
+#include <string.h>
+#include <stdlib.h>
 #include "FileHelper.h"
 
 
@@ -38,7 +39,7 @@ int	 writeIntToFile(int val, FILE* fp, const char* msg)
 	return 1;
 }
 
-int		writeFloatToFile(int val, FILE* fp, const char* msg)
+int		writeFloatToFile(float val, FILE* fp, const char* msg)
 {
 	if (fwrite(&val, sizeof(float), 1, fp) != 1)
 	{

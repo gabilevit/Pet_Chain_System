@@ -48,12 +48,10 @@ int	saveCertificateToBinaryFile(const Certificate* pCer, FILE* fp)
 
 int	loadCertificateFromBinaryFile(Certificate* pCer, FILE* fp)
 {
-	if (!readIntFromFile(pCer->animalCertificateId, fp, "Error reading id from binary file\n"))
+	if (!readIntFromFile(&pCer->animalCertificateId, fp, "Error reading id from binary file\n"))
 		return 0;
-	if(!readStringFromFile(pCer->countryOfOrigin, fp, "Error reading country from binary file\n"))
-		return 0;
-	if (!readStringFromFile(pCer->animalDescription, fp, "Error reading description from binary file\n"))
-		return 0;
+	pCer->countryOfOrigin = readStringFromFile(fp, "Error reading country from binary file\n");
+	pCer->animalDescription = readStringFromFile(fp, "Error reading description from binary file\n");
 	return 1;
 }
 
