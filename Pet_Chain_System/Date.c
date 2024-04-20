@@ -100,25 +100,29 @@ int		loadDateFromTextFile(Date* pDate, FILE* fp)
 	return 1;
 }
 
-int		saveDateToBinaryFile(const Date* pDate, FILE* fp)
+int		saveDateToBinaryFileCompressed(const Date* pDate, FILE* fp)
 {
-	if (!writeIntToFile(pDate->day, fp, "Error writing day to binary file\n"))
+	BYTE data[3];
+	data[0] = pDate->year >> 7;
+	data[1] = (pDate->month >> 3) | (pDate->year << 1);
+	data[2] = pDate->day | (pDate->month << 5);
+	if (fwrite(data, sizeof(BYTE), 3, fp) != 3) {
+		puts("Error writing the date to binary file compressed\n");
 		return 0;
-	if (!writeIntToFile(pDate->month, fp, "Error writing month to binary file\n"))
-		return 0;
-	if (!writeIntToFile(pDate->year, fp, "Error writing year to binary file\n"))
-		return 0;
+	}
 	return 1;
 }
 
-int		loadDateFromBinaryFile(Date* pDate, FILE* fp)
+int		loadDateFromBinaryFileCompressed(Date* pDate, FILE* fp)
 {
-	if (!readIntFromFile(&pDate->day, fp, "Error reading day from binary file\n"))
+	BYTE data[3];
+	if (fread(data, sizeof(BYTE), 3, fp) != 3) {
+		puts("Error reading the date from binary file compressed\n");
 		return 0;
-	if (!readIntFromFile(&pDate->month, fp, "Error reading month from binary file\n"))
-		return 0;
-	if (!readIntFromFile(&pDate->year, fp, "Error reading year from binary file\n"))
-		return 0;
+	}
+	pDate->year = (data[1] >> 1) | ((data[0] & 0x7F) << 7);
+	pDate->month = (data[2] >> 5) | ((data[1] & 0x1) << 3);
+	pDate->day = data[2] & 0x1F;
 	return 1;
 }
 

@@ -1,22 +1,3 @@
-﻿  Animal.c
-C:\Users\gabil\Desktop\Portfolio\C\Pet_Chain_System\Pet_Chain_System\Animal.c(113,41): warning C4133: 'function': incompatible types - from 'eGenderType *' to 'int *'
-C:\Users\gabil\Desktop\Portfolio\C\Pet_Chain_System\Pet_Chain_System\Animal.c(160,37): warning C4133: 'function': incompatible types - from 'eGenderType *' to 'int *'
-  Category.c
-C:\Users\gabil\Desktop\Portfolio\C\Pet_Chain_System\Pet_Chain_System\Category.c(91,38): warning C4133: 'function': incompatible types - from 'eCategoryType *' to 'int *'
-C:\Users\gabil\Desktop\Portfolio\C\Pet_Chain_System\Pet_Chain_System\Category.c(114,34): warning C4133: 'function': incompatible types - from 'eCategoryType *' to 'int *'
-  Certificate.c
-  Date.c
-  Discount.c
-C:\Users\gabil\Desktop\Portfolio\C\Pet_Chain_System\Pet_Chain_System\Discount.c(114,9): warning C4778: 'printf' : unterminated format string '%\n'
-  FileHelper.c
-  General.c
-  List.c
-  main.c
-  Review.c
-  Store.c
-C:\Users\gabil\Desktop\Portfolio\C\Pet_Chain_System\Pet_Chain_System\Store.c(26,49): warning C4013: 'generateCertificateId' undefined; assuming extern returning int
-C:\Users\gabil\Desktop\Portfolio\C\Pet_Chain_System\Pet_Chain_System\Store.c(53,33): warning C4013: 'isCertificateIdUnique' undefined; assuming extern returning int
-  StoreManager.c
-C:\Users\gabil\Desktop\Portfolio\C\Pet_Chain_System\Pet_Chain_System\StoreManager.c(90,45): warning C4047: '!=': 'const int' differs in levels of indirection from 'void *'
-  Generating Code...
-  Pet_Chain_System.vcxproj -> C:\Users\gabil\Desktop\Portfolio\C\Pet_Chain_System\x64\Debug\Pet_Chain_System.exe
+﻿  StoreManager.c
+C:\Users\gabil\Afeka\Programing Systems With C\FinalProject\Pet_Chain_System\Pet_Chain_System\StoreManager.c(90,45): warning C4047: '!=': 'const int' differs in levels of indirection from 'void *'
+  Pet_Chain_System.vcxproj -> C:\Users\gabil\Afeka\Programing Systems With C\FinalProject\Pet_Chain_System\x64\Debug\Pet_Chain_System.exe

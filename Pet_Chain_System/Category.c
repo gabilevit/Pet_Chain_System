@@ -74,15 +74,20 @@ int checkUniqeCode(const char* code, const Category* pCat)
 	return 0; // Code is unique
 }
 
-int	saveCategoryToTextFile(const Category* pCat, FILE* fp)
+int	saveCategoryToTextFile(Category* pCat, FILE* fp)
 {
 	if (!writeIntToTextFile(pCat->type, fp, "Error writing category type to text file\n"))
 		return 0;
-	if (pCat->pDiscount != NULL)
+	if (pCat->pDiscount == NULL)
 	{
-		if (!saveDiscountToTextFile(pCat->pDiscount, fp))
+		// If there is no discount save to file info that can asure that there is NO discount
+		if (!writeStringToTextFile("XXXXXX", fp, "Error writing to text file\n"))
+			return 0;
+		if (!writeIntToTextFile(0, fp, "Error writing text file\n"))
 			return 0;
 	}
+	else if(!saveDiscountToTextFile(pCat->pDiscount, fp))
+		return 0;
 	return 1;
 }
 
@@ -90,22 +95,37 @@ int	loadCategoryFromTextFile(Category* pCat, FILE* fp)
 {
 	if (!readIntFromTextFile(&pCat->type, fp, "Error reading category type from text file\n"))
 		return 0;
+	char isDiscountCode[LEN + 1];
+	myGets(isDiscountCode, LEN + 1, fp);
+	int isDiscountPercent;
+	if (!readIntFromTextFile(&isDiscountPercent, fp, "Error reading discount in percent from text file\n"))
+		return 0;
+	// If there wasnt a discount 
+	if (!strcmp(isDiscountCode, "XXXXXX") && (isDiscountPercent == 0))
+	{
+		return 1;
+	}
 	if (!createDiscount(pCat))
 		return 0;
-	if (!loadDiscountFromTextFile(pCat->pDiscount, fp))
+	if (!loadDiscountFromAnyFile(pCat->pDiscount, isDiscountCode, isDiscountPercent))
 		return 0;
 	return 1;
 }
 
-int	saveCategoryToBinaryFile(const Category* pCat, FILE* fp)
+int	saveCategoryToBinaryFile(Category* pCat, FILE* fp)
 {
 	if (!writeIntToFile(pCat->type, fp, "Error writing category type to binary file\n"))
 		return 0;
-	if (pCat->pDiscount != NULL)
+	if (pCat->pDiscount == NULL)
 	{
-		if (!saveDiscountToBinaryFileCompressed(pCat->pDiscount, fp))
+		// If there is no discount save to file info that can asure that there is NO discount
+		if (!writeStringToFile("XXXXXX", fp, "Error writing to text file\n"))
+			return 0;
+		if (!writeIntToFile(0, fp, "Error writing text file\n"))
 			return 0;
 	}
+	else if (!saveDiscountToBinaryFile(pCat->pDiscount, fp))
+		return 0;
 	return 1;
 }
 
@@ -113,9 +133,19 @@ int	loadCategoryFromBinaryFile(Category* pCat, FILE* fp)
 {
 	if (!readIntFromFile(&pCat->type, fp, "Error reading category type from binary file\n"))
 		return 0;
+	char* isDiscountCode;
+	isDiscountCode = readStringFromFile(fp, "Error reading discount code from binary file\n");
+	int isDiscountPercent;
+	if (!readIntFromFile(&isDiscountPercent, fp, "Error reading discount in percent from binary file\n"))
+		return 0;
+	// If there wasnt a discount 
+	if (!strcmp(isDiscountCode, "XXXXXX") && (isDiscountPercent == 0))
+	{
+		return 1;
+	}
 	if (!createDiscount(pCat))
 		return 0;
-	if (!loadDiscountFromBinaryFileCompressed(pCat->pDiscount, fp))
+	if (!loadDiscountFromAnyFile(pCat->pDiscount, isDiscountCode, isDiscountPercent))
 		return 0;
 	return 1;
 }
@@ -124,7 +154,8 @@ int createDiscount(Category* pCat)
 {
 	pCat->pDiscount = (Discount*)calloc(1, sizeof(Discount));
 	if (!pCat->pDiscount) {
-		printf("Error allocating memory for discount\n");
+		puts("Error allocating memory for discount\n");
+		freeDiscount(pCat->pDiscount);
 		return 0;
 	}
 	return 1;
@@ -136,7 +167,7 @@ void printCategory(const Category* pCat)
 	if (pCat->pDiscount != NULL)
 		printDiscount(pCat->pDiscount);
 	else
-		printf("This category of animals doesnt have an discount");
+		puts("This category of animals doesnt have an discount\n");
 }
 
 void freeCategory(Category* pCat)

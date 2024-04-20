@@ -118,6 +118,41 @@ Store* enterTheStore(StoreManager* pManager)
 	return store;
 }
 
+void addDiscountToAllAnimalsToSpesificCategory(StoreManager* pManager, Category* pChosenCategory)
+{
+	if (pManager != NULL && pChosenCategory != NULL)
+	{
+		NODE* current = pManager->storeList.head.next; //first Node
+		while (current != NULL) {
+			Store* pStore = (Store*)current->key;
+			for (int i = 0; i < pStore->animalCount; i++)
+			{
+				Animal* pAnimal = pStore->animalArr[i];
+				int type1 = (int)pAnimal->pCategory->type;
+				int type2 = (int)pChosenCategory->type;
+				isSameCategoryType(pAnimal, pChosenCategory);
+			}
+			current = current->next;
+		}
+	}
+}
+
+void isSameCategoryType(Animal* pAnimal, Category* pCategory)
+{
+	if (pAnimal->pCategory->type == pCategory->type)
+		*(pAnimal->pCategory->pDiscount) = *pCategory->pDiscount;
+}
+
+void findMostPopularAnimalInTheWholeChain(StoreManager* pManager)
+{
+
+}
+
+void findStoreWithMostAnimals(StoreManager* pMannager)
+{
+
+}
+
 void initManagerFromTextFile(StoreManager* storeManager, const char* fileName) 
 {
 	if (!loadManagerFromTextFile(storeManager, fileName))
@@ -176,7 +211,6 @@ int	loadManagerFromTextFile(StoreManager* pManager, const char* fileName)
 		printf("Error open store manager file to read\n");
 		return 0;
 	}
-	//myGets(pManager->chainName, NAME, fp);
 	L_init(&pManager->storeList);
 	int count;
 	fscanf(fp, "%d", &count);
@@ -210,12 +244,9 @@ int	saveManagerToBinaryFile(const StoreManager* pManager, const char* fileName)
 		printf("Error open store manager file to write\n");
 		return 0;
 	}
-	/*if (!writeStringToTextFile(pManager->chainName, fp, "Error writing chain name to binary file\n"))
-		return 0;*/
 	int count = getStoreCount(pManager);
 	if (!writeIntToFile(count, fp, "Error writing number of stores to file\n"))
 		return 0;
-	//fprintf(fp, "%d\n", count);
 	if (count > 0)
 	{
 		NODE* pN = pManager->storeList.head.next; //first Node
@@ -232,7 +263,6 @@ int	saveManagerToBinaryFile(const StoreManager* pManager, const char* fileName)
 			}
 			pN = pN->next;
 		}
-
 	}
 	fclose(fp);
 	return 1;
@@ -275,7 +305,6 @@ int	loadManagerFromBinaryFile(StoreManager* pManager, const char* fileName)
 		return 0;
 	}
 	L_init(&pManager->storeList);
-	//myGets(pManager->chainName, NAME, fp);
 	if (!loadStoreListFromBinaryFile(pManager, fp))
 		return 0;
 	return 1;
@@ -284,7 +313,7 @@ int	loadManagerFromBinaryFile(StoreManager* pManager, const char* fileName)
 void printStores(const StoreManager* pManager)
 {
 	int count = getStoreCount(pManager);
-	printf("There are %d stores\n", count);
+	printf("&&&&&&&& There are %d stores &&&&&&&&\n", count);
 	L_print(&pManager->storeList, printStore);
 }
 

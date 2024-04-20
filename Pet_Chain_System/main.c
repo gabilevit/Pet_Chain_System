@@ -36,12 +36,23 @@ int main()
 
 		case eAddDiscount:
 			chosenCategory = getSpecificCategory(getCategoryType(), dogCategory, catCategory, birdCategory);
-			if (!addDiscountOrUpdateDiscount(chosenCategory))
-				printf("Error adding a discount\n");
+			if (addDiscountOrUpdateDiscount(chosenCategory))
+			{
+				addDiscountToAllAnimalsToSpesificCategory(&manager, chosenCategory);
+			}
+			else 	printf("Error adding a discount\n");
 			break;
 
 		case ePrintStores:
 			printStores(&manager);
+			break;
+
+		case eFindPopularAnimal:
+			findMostPopularAnimalInTheWholeChain(&manager);
+			break;
+
+		case eFindMostAnimals:
+			findStoreWithMostAnimals(&manager);
 			break;
 
 		case EXIT:
@@ -86,6 +97,10 @@ void storeLobby(Store* pStore, Category* cat1, Category* cat2, Category* cat3) {
 				printf("Error adding a review\n");
 			break;
 
+		case ePrintAnimals:
+			printStore(pStore);
+			break;
+
 		case eSortAnimals:
 			sortAnimals(pStore);
 			break;
@@ -93,14 +108,6 @@ void storeLobby(Store* pStore, Category* cat1, Category* cat2, Category* cat3) {
 		case eFindAnimal:
 			findAnimalWithBsearch(pStore);
 			break;
-
-		/*case eFindPopularAnimal:
-			findMostPopular();
-			break;
-
-		case eFindExpensiveAnimal:
-			findMostExpensive();
-			break;*/
 
 		case RETURN:
 			choice = 1;
@@ -110,7 +117,7 @@ void storeLobby(Store* pStore, Category* cat1, Category* cat2, Category* cat3) {
 			printf("Wrong option\n");
 			break;
 		}
-	} while (!choice);
+	} while (choice != -2);
 }
 
 int menu()

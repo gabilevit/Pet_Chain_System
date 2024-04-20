@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <ctype.h>
+#include <stdlib.h>
 #include "Discount.h"
 
 int initDiscountWithoutACode(Discount* pDis)
@@ -68,50 +69,61 @@ int	saveDiscountToTextFile(const Discount* pDis, FILE* fp)
 	return 1;
 }
 
-int	loadDiscountFromTextFile(Discount* pDis, FILE* fp)
+int	loadDiscountFromAnyFile(Discount* pDis, char* discountCode, int discountPercent)
 {
-	myGets(pDis->discountCode, LEN+1, fp);
-	if (!readIntFromTextFile(&pDis->discountPercent, fp, "Error reading discount in percent from text file\n"))
+	strcpy(pDis->discountCode, discountCode);
+	if (!pDis->discountCode)
 		return 0;
+	pDis->discountPercent = discountPercent;
 	return 1;
 }
 
-int	saveDiscountToBinaryFileCompressed(const Discount* pDis, FILE* fp)
+int	saveDiscountToBinaryFile(const Discount* pDis, FILE* fp)
 {
-	BYTE data[2] = { 0 };
-	int len = (int)strlen(pDis->discountCode);
-	data[0] =  len >> 1;
-	data[1] = (len & 0x1) << 7 | pDis->discountPercent;
-	if (fwrite(data, sizeof(BYTE), 2, fp) != 2) 
-	{
-		puts("Error writing date to file");
-		return 0;
-	}
 	if (!writeStringToFile(pDis->discountCode, fp, "Error writing discount code to binary file\n"))
 		return 0;
+	if (!writeIntToFile(pDis->discountPercent, fp, "Error writing discount percent to binary file\n"))
+		return 0;
 	return 1;
-}
+	//BYTE data[2] = { 0 };
+	//int len = (int)strlen(pDis->discountCode);
+	//data[0] =  len >> 1;
+	//data[1] = (len & 0x1) << 7 | pDis->discountPercent;
+	//if (fwrite(data, sizeof(BYTE), 2, fp) != 2) 
+	//{
+	//	puts("Error writing date to file");
+	//	return 0;
+	//}
+	//if (!writeStringToFile(pDis->discountCode, fp, "Error writing discount code to binary file\n"))
+	//	return 0;
+	//return 1;
 
-int	loadDiscountFromBinaryFileCompressed(Discount* pDis, FILE* fp)
-{
-	if (!pDis)
-		return 0;
-	BYTE data[2];
-	if (fread(&data, sizeof(BYTE), 2, fp) != 2)
-	{
-		puts("Error writing date to file");
-		return 0;
-	}
-	int len = (data[0] << 1) & 0x7;
-	pDis->discountPercent = data[1] & 0x7F;
-	myGets(pDis->discountCode, MAX_STR_LEN, fp);
-	return 1;
+	//if (!pDis)
+	//	return 0;
+	//BYTE data[2];
+	//if (fread(&data, sizeof(BYTE), 2, fp) != 2)
+	//{
+	//	puts("Error writing date to file");
+	//	return 0;
+	//}
+	//int len = (data[0] << 1) & 0x7;
+	//pDis->discountPercent = data[1] & 0x7F;
+	//myGets(pDis->discountCode, MAX_STR_LEN, fp);
+	////This is the indication from saved file that there wasnt a discount
+	//if (!strcmp(pDis->discountCode, "XXXXXX") && (pDis->discountPercent == 0))
+	//	pDis = NULL;
+	//return 1;
 }
 
 void printDiscount(const Discount* pDis)
 {
 	printf("The discount code is: %s\n", pDis->discountCode);
 	printf("This category of animals in this type has a discount of %d%\n", pDis->discountPercent);
+}
+
+void freeDiscount(Discount* pDis)
+{
+	free(pDis);
 }
 
 

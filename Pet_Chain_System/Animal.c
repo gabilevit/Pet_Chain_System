@@ -86,8 +86,9 @@ int compareAnimalByBirthDate(const void* animal1, const void* animal2)
 	return 0;
 }
 
-int	saveAnimalToTextFile(const Animal* pAnimal, FILE* fp)
+int	saveAnimalToTextFile(const Animal** val, FILE* fp)
 {
+	const Animal* pAnimal = *(const Animal**)val;
 	if (!writeStringToTextFile(pAnimal->name, fp, "Error writing name to text file\n"))
 		return 0;
 	if (!writeIntToTextFile(pAnimal->type, fp, "Error writing gender type to text file\n"))
@@ -107,8 +108,9 @@ int	saveAnimalToTextFile(const Animal* pAnimal, FILE* fp)
 	return 1;
 }
 
-int	loadAnimalFromTextFile(Animal* pAnimal, FILE* fp)
+int	loadAnimalFromTextFile(Animal** val, FILE* fp)
 {
+	Animal* pAnimal = *(const Animal**)val;
 	pAnimal->name = readDynStringFromTextFile(fp);
 	if (!readIntFromTextFile(&pAnimal->type, fp, "Error reading gender type from text file\n"))
 		return 0;
@@ -133,15 +135,16 @@ int	loadAnimalFromTextFile(Animal* pAnimal, FILE* fp)
 	return 1;
 }
 
-int	saveAnimalToBinaryFile(const Animal* pAnimal, FILE* fp)
+int	saveAnimalToBinaryFile(const Animal** val, FILE* fp)
 {
+	const Animal* pAnimal = *(const Animal**)val;
 	if (!writeStringToFile(pAnimal->name, fp, "Error writing name to binary file\n"))
 		return 0;
 	if (!writeIntToFile(pAnimal->type, fp, "Error writing gender type to binary file\n"))
 		return 0;
 	if (!writeFloatToFile(pAnimal->price, fp, "Error writing price to binary file\n"))
 		return 0;
-	if (!saveDateToBinaryFile(&pAnimal->birth, fp))
+	if (!saveDateToBinaryFileCompressed(&pAnimal->birth, fp))
 		return 0;
 	if (!saveCategoryToBinaryFile(pAnimal->pCategory, fp))
 		return 0;
@@ -154,14 +157,15 @@ int	saveAnimalToBinaryFile(const Animal* pAnimal, FILE* fp)
 	return 1;
 }
 
-int	loadAnimalFromBinaryFile(Animal* pAnimal, FILE* fp)
+int	loadAnimalFromBinaryFile(Animal** val, FILE* fp)
 {
+	Animal* pAnimal = *(const Animal**)val;
 	pAnimal->name = readStringFromFile(fp, "Error reading name from binary file\n");
 	if (!readIntFromFile(&pAnimal->type, fp, "Error reading gender type from binary file\n"))
 		return 0;
 	if (!readFloatFromFile(&pAnimal->price, fp, "Error reading price from binary file\n"))
 		return 0;
-	if (!loadDateFromBinaryFile(&pAnimal->birth, fp))
+	if (!loadDateFromBinaryFileCompressed(&pAnimal->birth, fp))
 		return 0;
 	if (!createCategory(pAnimal))
 		return 0;
@@ -263,14 +267,14 @@ void printAnimal(const  void* val)
 	printf("Animal name: %s\n", pAnimal->name);
 	printf("Animal gender: %s\n", GenderTypeStr[pAnimal->type]);
 	printf("Animal price: %.2f\n", pAnimal->price);
-	printf("Birth date: ");
+	printf("Birth ");
 	printDate(&pAnimal->birth);
-	printf("\n");
 	//printf("Animal category: %s\n", CategoryTypeStr[pAnimal->pCategory->type]);
 	printCategory(pAnimal->pCategory);
 	printCertificate(&pAnimal->cer);
-	printf("\n -------- Has %d Reviews\n", pAnimal->reviewCount);
+	printf("\n ********* Has %d Reviews *********\n", pAnimal->reviewCount);
 	printReviewArr(pAnimal->reviewArr, pAnimal->reviewCount);
+	printf("\n");
 }
 
 //void printAnimalInShort(const void* val)

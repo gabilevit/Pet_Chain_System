@@ -20,6 +20,12 @@ int generateStoreNumber(StoreManager* pManager);
 int	getStoreCount(const StoreManager* pManager);
 Store* findStore(StoreManager* manager, const int storeNumber);
 Store* enterTheStore(StoreManager* pManager);
+void addDiscountToAllAnimalsToSpesificCategory(StoreManager* pManager, Category* pChosenCategory);
+void isSameCategoryType(Animal* pAnimal, Category* pCategory);
+
+// 2 CREATIVE FUNCTIONS
+void findMostPopularAnimalInTheWholeChain(StoreManager* pManager);
+void findStoreWithMostAnimals(StoreManager* pMannager);
 
 // FILE FUNCTIONS
 void initManagerFromTextFile(StoreManager* storeManager, const char* fileName);

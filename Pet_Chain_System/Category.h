@@ -24,9 +24,9 @@ int initDiscount(Discount* pDiscount, Category* pCat);
 int checkUniqeCode(const char* code, const Category* pCat);
 
 // FILE FUNCTIONS
-int	saveCategoryToTextFile(const Category* pCat, FILE* fp);
+int	saveCategoryToTextFile(Category* pCat, FILE* fp);
 int	loadCategoryFromTextFile(Category* pCat, FILE* fp);
-int	saveCategoryToBinaryFile(const Category* pCat, FILE* fp);
+int	saveCategoryToBinaryFile(Category* pCat, FILE* fp);
 int	loadCategoryFromBinaryFile(Category* pCat, FILE* fp);
 int createDiscount(Category* pCat);
 

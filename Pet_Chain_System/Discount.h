@@ -6,8 +6,6 @@
 
 #define LEN 6
 
-typedef unsigned char BYTE;
-
 typedef struct
 {
 	char discountCode[LEN + 1];
@@ -20,11 +18,13 @@ int getDiscountPercent(Discount* pDis);
 
 // FILE FUNCTIONS
 int	saveDiscountToTextFile(const Discount* pDis, FILE* fp);
-int	loadDiscountFromTextFile(Discount* pDis, FILE* fp);
-int	saveDiscountToBinaryFileCompressed(const Discount* pDis, FILE* fp);
-int	loadDiscountFromBinaryFileCompressed(Discount* pDis, FILE* fp);
+int	loadDiscountFromAnyFile(Discount* pDis, char* discountCode, int discountPercent);
+int	saveDiscountToBinaryFile(const Discount* pDis, FILE* fp);
 
 // PRINT FUNCTION
 void printDiscount(const Discount* pDis);
+
+// FREE FUNCTION
+void freeDiscount(Discount* pDis);
 
 #endif // !__DISCOUNT__

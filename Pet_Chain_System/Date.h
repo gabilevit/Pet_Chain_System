@@ -6,6 +6,8 @@
 
 #define MIN_YEAR 2000
 
+typedef unsigned char BYTE;
+
 typedef struct
 {
 	int			day;
@@ -23,8 +25,8 @@ int	compareDate(const void* d1, const void* d2);
 // FILE FUNCTIONS
 int		saveDateToTextFile(const Date* pDate, FILE* fp);
 int		loadDateFromTextFile(Date* pDate, FILE* fp);
-int		saveDateToBinaryFile(const Date* pDate, FILE* fp);
-int		loadDateFromBinaryFile(Date* pDate, FILE* fp);
+int		saveDateToBinaryFileCompressed(const Date* pDate, FILE* fp);
+int		loadDateFromBinaryFileCompressed(Date* pDate, FILE* fp);
 
 // PRINT FUNCTION
 void	printDate(const Date* pDate);

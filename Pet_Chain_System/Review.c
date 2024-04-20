@@ -33,7 +33,7 @@ int	saveReviewToBinaryFile(const Review* pRev, FILE* fp)
 {
 	if (!writeStringToFile(pRev->comment, fp, "Error writing comment to binary file\n"))
 		return 0;
-	if (!saveDateToBinaryFile(&pRev->date, fp))
+	if (!saveDateToBinaryFileCompressed(&pRev->date, fp))
 		return 0;
 	return 1;
 }
@@ -41,7 +41,7 @@ int	saveReviewToBinaryFile(const Review* pRev, FILE* fp)
 int	loadReviewFromBinaryFile(Review* pRev, FILE* fp)
 {
 	pRev->comment = readStringFromFile(fp, "Error reading comment from binary file\n");
-	if (!loadDateFromBinaryFile(&pRev->date, fp))
+	if (!loadDateFromBinaryFileCompressed(&pRev->date, fp))
 		return 0;
 	return 1;
 }

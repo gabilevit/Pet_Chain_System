@@ -153,8 +153,8 @@ void findAnimalWithBsearch(const Store* pStore)
 		if (pF == NULL)
 			printf("Animal was not found\n");
 		else {
-			printf("Animal found, ");
-			printAnimal(*pF);
+			printf("ANIMAL HAS BEEN FOUND:\n");
+			printAnimal(pF);
 		}
 	}
 	else {
@@ -257,52 +257,41 @@ int	createAnimalArr(Store* pStore)
 
 int	saveAnimalArrToTextFile(const Store* pStore, FILE* fp, const char* msg)
 {
-	for (int i = 0; i < pStore->animalCount; i++)
+	if (!generalSaveLoadArrFile(pStore->animalArr, pStore->animalCount, sizeof(Animal*), fp, saveAnimalToTextFile))
 	{
-		if (!generalSaveLoadArrFile(pStore->animalArr[i], pStore->animalCount, sizeof(Animal*), fp, saveAnimalToTextFile))
-		{
-			puts(msg);
-			return 0;
-		}
+		puts(msg);
+		return 0;
 	}
 	return 1;
 }
 
 int	loadAnimalArrFromTextFile(Store* pStore, FILE* fp, const char* msg)
 {
-	for (int i = 0; i < pStore->animalCount; i++)
+	if (!generalSaveLoadArrFile(pStore->animalArr, pStore->animalCount, sizeof(Animal*), fp, loadAnimalFromTextFile))
 	{
-		if (!generalSaveLoadArrFile(pStore->animalArr[i], pStore->animalCount, sizeof(Animal*), fp, loadAnimalFromTextFile))
-		{
-			puts(msg);
-			return 0;
-		}
+		puts(msg);
+		return 0;
 	}
 	return 1;
 }
 
 int	saveAnimalArrToBinaryFile(const Store* pStore, FILE* fp, const char* msg)
 {
-	for (int i = 0; i < pStore->animalCount; i++)
+	if (!generalSaveLoadArrFile(pStore->animalArr, pStore->animalCount, sizeof(Animal*), fp, saveAnimalToBinaryFile))
 	{
-		if (!generalSaveLoadArrFile(pStore->animalArr[i], pStore->animalCount, sizeof(Animal*), fp, saveAnimalToBinaryFile))
-		{
-			puts(msg);
-			return 0;
-		}
+		puts(msg);
+		return 0;
 	}
 	return 1;
 }
 
 int	loadAnimalArrFromBinaryFile(Store* pStore, FILE* fp, const char* msg)
 {
-	for (int i = 0; i < pStore->animalCount; i++)
+
+	if (!generalSaveLoadArrFile(pStore->animalArr, pStore->animalCount, sizeof(Animal*), fp, loadAnimalFromBinaryFile))
 	{
-		if (!generalSaveLoadArrFile(pStore->animalArr[i], pStore->animalCount, sizeof(Animal*), fp, loadAnimalFromBinaryFile))
-		{
-			puts(msg);
-			return 0;
-		}
+		puts(msg);
+		return 0;
 	}
 	return 1;
 }
@@ -312,7 +301,7 @@ void printStore(const  void* val)
 	const Store* pStore = (const Store*)val;
 	printf("Store number: %d\n", pStore->storeNumber);
 	printf("City: %s\n", pStore->city);
-	printf("\n -------- Has %d Animals\n", pStore->animalCount);
+	printf("\n -------- Has %d Animals --------\n", pStore->animalCount);
 	printAnimalsArr(pStore->animalArr, pStore->animalCount);
 }
 

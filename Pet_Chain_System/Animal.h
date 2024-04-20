@@ -38,10 +38,10 @@ int compareAnimalByPrice(const void* animal1, const void* animal2);
 int compareAnimalByBirthDate(const void* animal1, const void* animal2);
 
 // FILE FUNCTIONS
-int	saveAnimalToTextFile(const Animal* pAnimal, FILE* fp);
-int	loadAnimalFromTextFile(Animal* pAnimal, FILE* fp);
-int	saveAnimalToBinaryFile(const Animal* pAnimal, FILE* fp);
-int	loadAnimalFromBinaryFile(Animal* pAnimal, FILE* fp);
+int	saveAnimalToTextFile(const Animal** val, FILE* fp);
+int	loadAnimalFromTextFile(Animal** val, FILE* fp);
+int	saveAnimalToBinaryFile(const Animal** val, FILE* fp);
+int	loadAnimalFromBinaryFile(Animal** val, FILE* fp);
 int createCategory(Animal* pAnimal);
 int createCertificate(Animal* pAnimal);
 int	createReviewArr(Animal* pAnimal);

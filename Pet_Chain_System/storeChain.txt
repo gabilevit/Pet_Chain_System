@@ -1,25 +1,211 @@
-1
+4
 1
 Netanya
-1
+3
 Jack
 0
-123.000000
+87.500000
 12
 12
 2023
 0
-JAJA20
+DOGG20
 30
-6096
+9887
 USA
-IRs american kaka
+This is a certificate authorized for Jack
 2
-rev1
+I like this kind of dog
 20
 4
 2024
-rev2
+Nice animal!
+20
+4
+2024
+Whiskers
+0
+50.750000
+17
+3
+2023
+1
+XXXXXX
+0
+1221
+England
+This is a certificate authorized for Whiskers
+1
+Nice cat!
+20
+4
+2024
+Feathers
+0
+75.250000
+3
+2
+2024
+2
+TWET55
+15
+1426
+Jamaica
+This is a certificate authorized for Feathers
+1
+Lovely bird!
+20
+4
+2024
+2
+Tel Aviv-Yafo
+3
+Buddy
+0
+100.500000
+31
+12
+2020
+0
+DOGG20
+30
+2096
+Australia
+This is a certificate authorized for Buddy
+2
+Good and loyal australian dog
+20
+4
+2024
+This dog is good for gaurding the gardem mate
+20
+4
+2024
+Marla
+1
+66.000000
+22
+5
+2017
+1
+XXXXXX
+0
+2445
+Poland
+This is a certificate authorized for Marla
+2
+This kind of breed can live up to 20 years!
+20
+4
+2024
+Quiet cat...
+20
+4
+2024
+Mittens
+1
+78.750000
+11
+11
+2021
+1
+XXXXXX
+0
+2661
+USA
+This is a certificate authorized for Mittens
+0
+3
+Eilat
+3
+Pablo
+0
+26.500000
+22
+3
+2024
+2
+TWET55
+15
+2902
+Brazil
+This is a certificate authorized for Pablo
+1
+Beutifull bird and energetic also:)
+20
+4
+2024
+Ammos
+0
+33.250000
+20
+4
+2022
+2
+TWET55
+15
+3118
+Israel
+This is a certificate authorized for Ammos
+5
+Ammos the parrot
+20
+4
+2024
+He can talk!
+20
+4
+2024
+Smart bird!!!
+20
+4
+2024
+WOW!
+20
+4
+2024
+He can speak 3 languages!
+20
+4
+2024
+Kuka
+1
+320.000000
+12
+2
+2024
+2
+TWET55
+15
+3689
+Japan
+This is a certificate authorized for Kuka
+2
+This is a very rare bird!
+20
+4
+2024
+Worth the money!
+20
+4
+2024
+4
+Haifa
+1
+Spot
+0
+83.000000
+4
+5
+2022
+0
+DOGG20
+30
+3924
+India
+This is a certificate authorized for Spot
+1
+Cute dog
 20
 4
 2024
