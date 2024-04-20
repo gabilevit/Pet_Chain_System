@@ -28,6 +28,7 @@ int	saveCategoryToTextFile(const Category* pCat, FILE* fp);
 int	loadCategoryFromTextFile(Category* pCat, FILE* fp);
 int	saveCategoryToBinaryFile(const Category* pCat, FILE* fp);
 int	loadCategoryFromBinaryFile(Category* pCat, FILE* fp);
+int createDiscount(Category* pCat);
 
 // PRINT FUNCTION
 void printCategory(const Category* pCat);

@@ -100,6 +100,8 @@ int	saveAnimalToTextFile(const Animal* pAnimal, FILE* fp)
 		return 0;
 	if (!saveCertificateToTextFile(&pAnimal->cer, fp))
 		return 0;
+	if (!writeIntToTextFile(pAnimal->reviewCount, fp, "Error writing number of reviews to text file\n"))
+		return 0;
 	if (!saveReviewArrToTextFile(pAnimal, fp, "Error writing reviews to text file\n"))
 		return 0;
 	return 1;
@@ -114,9 +116,17 @@ int	loadAnimalFromTextFile(Animal* pAnimal, FILE* fp)
 		return 0;
 	if (!loadDateFromTextFile(&pAnimal->birth, fp))
 		return 0;
+	if (!createCategory(pAnimal))
+		return 0;
 	if (!loadCategoryFromTextFile(pAnimal->pCategory, fp))
 		return 0;
+	if (!createCertificate(pAnimal))
+		return 0;
 	if (!loadCertificateFromTextFile(&pAnimal->cer, fp))
+		return 0;
+	if (!readIntFromTextFile(&pAnimal->reviewCount, fp, "Error reading number of reviews from text file\n"))
+		return 0;
+	if (!createReviewArr(pAnimal))
 		return 0;
 	if (!loadReviewArrFromTextFile(pAnimal, fp, "Error reading reviews from text file\n"))
 		return 0;
@@ -129,15 +139,17 @@ int	saveAnimalToBinaryFile(const Animal* pAnimal, FILE* fp)
 		return 0;
 	if (!writeIntToFile(pAnimal->type, fp, "Error writing gender type to binary file\n"))
 		return 0;
-	if (!writeFloatToFile(pAnimal->price, fp, "Error writing price to text file\n"))
+	if (!writeFloatToFile(pAnimal->price, fp, "Error writing price to binary file\n"))
 		return 0;
-	if (!saveDateToTextFile(&pAnimal->birth, fp))
+	if (!saveDateToBinaryFile(&pAnimal->birth, fp))
 		return 0;
-	if (!saveCategoryToTextFile(pAnimal->pCategory, fp))
+	if (!saveCategoryToBinaryFile(pAnimal->pCategory, fp))
 		return 0;
-	if (!saveCertificateToTextFile(&pAnimal->cer, fp))
+	if (!saveCertificateToBinaryFile(&pAnimal->cer, fp))
 		return 0;
-	if (!saveReviewArrToTextFile(pAnimal, fp, "Error writing reviews to text file\n"))
+	if (!writeIntToFile(pAnimal->reviewCount, fp, "Error writing number of reviews to binary file\n"))
+		return 0;
+	if (!saveReviewArrToBinaryFile(pAnimal, fp, "Error writing reviews to binary file\n"))
 		return 0;
 	return 1;
 }
@@ -151,14 +163,44 @@ int	loadAnimalFromBinaryFile(Animal* pAnimal, FILE* fp)
 		return 0;
 	if (!loadDateFromBinaryFile(&pAnimal->birth, fp))
 		return 0;
+	if (!createCategory(pAnimal))
+		return 0;
 	if (!loadCategoryFromBinaryFile(pAnimal->pCategory, fp))
 		return 0;
+	if (!createCertificate(pAnimal))
+		return 0;
 	if (!loadCertificateFromBinaryFile(&pAnimal->cer, fp))
+		return 0;
+	if (!readIntFromFile(&pAnimal->reviewCount, fp, "Error reading number of reviews from binary file\n"))
 		return 0;
 	if (!createReviewArr(pAnimal))
 		return 0;
 	if (!loadReviewArrFromBinaryFile(pAnimal, fp, "Error reading reviews from binary file\n"))
 		return 0;
+	return 1;
+}
+
+int createCategory(Animal* pAnimal)
+{
+	pAnimal->pCategory = (Category*)calloc(1, sizeof(Category));
+	if (!pAnimal->pCategory) {
+		printf("Error allocating memory for category\n");
+		freeCategory(pAnimal->pCategory);
+		free(pAnimal->pCategory);
+		return 0;
+	}
+	return 1;
+}
+
+int createCertificate(Animal* pAnimal)
+{
+	Certificate* pCer = (Certificate*)calloc(1, sizeof(Certificate));
+	if (!pCer) {
+		printf("Error allocating memory for certificate\n");
+		freeCertificate(pCer);
+		free(pCer);
+		return 0;
+	}
 	return 1;
 }
 
@@ -168,6 +210,7 @@ int	createReviewArr(Animal* pAnimal)
 	if (!pAnimal->reviewArr)
 	{
 		printf("Alocation error for reviews\n");
+		freeReviewArr(pAnimal->reviewArr, pAnimal->reviewCount);
 		return 0;
 	}
 	return 1;
@@ -186,7 +229,7 @@ int	saveReviewArrToTextFile(const Animal* pAnimal, FILE* fp, const char* msg)
 
 int	loadReviewArrFromTextFile(Animal* pAnimal, FILE* fp, const char* msg)
 {
-	if (!generalSaveLoadArrFile(pAnimal->reviewArr, pAnimal->reviewCount, sizeof(Review*), fp, loadReviewFromTextFile))
+	if (!generalSaveLoadArrFile(pAnimal->reviewArr, pAnimal->reviewCount, sizeof(Review), fp, loadReviewFromTextFile))
 	{
 		puts(msg);
 		return 0;
@@ -196,7 +239,7 @@ int	loadReviewArrFromTextFile(Animal* pAnimal, FILE* fp, const char* msg)
 
 int	saveReviewArrToBinaryFile(const Animal* pAnimal, FILE* fp, const char* msg)
 {
-	if (!generalSaveLoadArrFile(pAnimal->reviewArr, pAnimal->reviewCount, sizeof(Review*), fp, saveReviewToBinaryFile))
+	if (!generalSaveLoadArrFile(pAnimal->reviewArr, pAnimal->reviewCount, sizeof(Review), fp, saveReviewToBinaryFile))
 	{
 		puts(msg);
 		return 0;
@@ -206,7 +249,7 @@ int	saveReviewArrToBinaryFile(const Animal* pAnimal, FILE* fp, const char* msg)
 
 int	loadReviewArrFromBinaryFile(Animal* pAnimal, FILE* fp, const char* msg)
 {
-	if (!generalSaveLoadArrFile(pAnimal->reviewArr, pAnimal->reviewCount, sizeof(Review*), fp, loadReviewFromBinaryFile))
+	if (!generalSaveLoadArrFile(pAnimal->reviewArr, pAnimal->reviewCount, sizeof(Review), fp, loadReviewFromBinaryFile))
 	{
 		puts(msg);
 		return 0;
@@ -253,5 +296,5 @@ void freeAnimal(void* pAnimal)
 
 void freeReviewArr(Review* arr, int size)
 {
-	generalArrayFunction(arr, size, sizeof(Review*), freeReview);
+	generalArrayFunction(arr, size, sizeof(Review), freeReview);
 }

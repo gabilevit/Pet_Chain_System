@@ -70,7 +70,7 @@ int	saveDiscountToTextFile(const Discount* pDis, FILE* fp)
 
 int	loadDiscountFromTextFile(Discount* pDis, FILE* fp)
 {
-	myGets(pDis->discountCode, LEN, fp);
+	myGets(pDis->discountCode, LEN+1, fp);
 	if (!readIntFromTextFile(&pDis->discountPercent, fp, "Error reading discount in percent from text file\n"))
 		return 0;
 	return 1;

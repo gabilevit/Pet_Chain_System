@@ -1,9 +1,9 @@
 ﻿  Animal.c
-C:\Users\gabil\Desktop\Portfolio\C\Pet_Chain_System\Pet_Chain_System\Animal.c(111,41): warning C4133: 'function': incompatible types - from 'eGenderType *' to 'int *'
-C:\Users\gabil\Desktop\Portfolio\C\Pet_Chain_System\Pet_Chain_System\Animal.c(148,37): warning C4133: 'function': incompatible types - from 'eGenderType *' to 'int *'
+C:\Users\gabil\Desktop\Portfolio\C\Pet_Chain_System\Pet_Chain_System\Animal.c(113,41): warning C4133: 'function': incompatible types - from 'eGenderType *' to 'int *'
+C:\Users\gabil\Desktop\Portfolio\C\Pet_Chain_System\Pet_Chain_System\Animal.c(160,37): warning C4133: 'function': incompatible types - from 'eGenderType *' to 'int *'
   Category.c
 C:\Users\gabil\Desktop\Portfolio\C\Pet_Chain_System\Pet_Chain_System\Category.c(91,38): warning C4133: 'function': incompatible types - from 'eCategoryType *' to 'int *'
-C:\Users\gabil\Desktop\Portfolio\C\Pet_Chain_System\Pet_Chain_System\Category.c(112,34): warning C4133: 'function': incompatible types - from 'eCategoryType *' to 'int *'
+C:\Users\gabil\Desktop\Portfolio\C\Pet_Chain_System\Pet_Chain_System\Category.c(114,34): warning C4133: 'function': incompatible types - from 'eCategoryType *' to 'int *'
   Certificate.c
   Date.c
   Discount.c

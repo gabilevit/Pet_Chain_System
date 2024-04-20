@@ -90,6 +90,8 @@ int	loadCategoryFromTextFile(Category* pCat, FILE* fp)
 {
 	if (!readIntFromTextFile(&pCat->type, fp, "Error reading category type from text file\n"))
 		return 0;
+	if (!createDiscount(pCat))
+		return 0;
 	if (!loadDiscountFromTextFile(pCat->pDiscount, fp))
 		return 0;
 	return 1;
@@ -111,8 +113,20 @@ int	loadCategoryFromBinaryFile(Category* pCat, FILE* fp)
 {
 	if (!readIntFromFile(&pCat->type, fp, "Error reading category type from binary file\n"))
 		return 0;
+	if (!createDiscount(pCat))
+		return 0;
 	if (!loadDiscountFromBinaryFileCompressed(pCat->pDiscount, fp))
 		return 0;
+	return 1;
+}
+
+int createDiscount(Category* pCat)
+{
+	pCat->pDiscount = (Discount*)calloc(1, sizeof(Discount));
+	if (!pCat->pDiscount) {
+		printf("Error allocating memory for discount\n");
+		return 0;
+	}
 	return 1;
 }
 

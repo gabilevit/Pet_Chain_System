@@ -17,7 +17,7 @@ int initCertificate(Certificate* pCer, int certificateId)
 
 int	saveCertificateToTextFile(const Certificate* pCer, FILE* fp)
 {
-	if (!writeIntToFile(pCer->animalCertificateId, fp, "Error writing id to text file\n"))
+	if (!writeIntToTextFile(pCer->animalCertificateId, fp, "Error writing id to text file\n"))
 		return 0;
 	if (!writeStringToTextFile(pCer->countryOfOrigin, fp, "Error writing country to text file\n"))
 		return 0;

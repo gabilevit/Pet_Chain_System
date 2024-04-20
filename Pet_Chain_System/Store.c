@@ -181,6 +181,8 @@ int	saveStoreToTextFile(const Store* pStore, FILE* fp)
 		return 0;
 	if (!writeStringToTextFile(pStore->city, fp, "Error writing city to text file\n"))
 		return 0;
+	if (!writeIntToTextFile(pStore->animalCount, fp, "Error writing number of animals to text file\n"))
+		return 0;
 	if (!saveAnimalArrToTextFile(pStore, fp, "Error writing animals to text file\n"))
 		return 0;
 	return 1;
@@ -191,6 +193,10 @@ int	loadStoreFromTextFile(Store* pStore, FILE* fp)
 	if (!readIntFromTextFile(&pStore->storeNumber, fp, "Error reading store number from text file\n"))
 		return 0;
 	pStore->city = readDynStringFromTextFile(fp);
+	if (!readIntFromTextFile(&pStore->animalCount, fp, "Error reading number of animals from text file\n"))
+		return 0;
+	if (!createAnimalArr(pStore))
+		return 0;
 	if (!loadAnimalArrFromTextFile(pStore, fp, "Error reading animals from text file\n"))
 		return 0;
 	return 1;
@@ -202,6 +208,8 @@ int	saveStoreToBinaryFile(const Store* pStore, FILE* fp)
 		return 0;
 	if (!writeStringToFile(pStore->city, fp, "Error writing city to binary file\n"))
 		return 0;
+	if (!writeIntToFile(pStore->animalCount, fp, "Error writing number of animals to binary file\n"))
+		return 0;
 	if (!saveAnimalArrToBinaryFile(pStore, fp, "Error writing animals to binary file\n"))
 		return 0;
 	return 1;
@@ -212,6 +220,10 @@ int	loadStoreFromBinaryFile(Store* pStore, FILE* fp)
 	if (!readIntFromFile(&pStore->storeNumber, fp, "Error reading store number from binary file\n"))
 		return 0;
 	pStore->city = readStringFromFile(fp, "Error reading city from binary file\n");
+	if (!readIntFromFile(&pStore->animalCount, fp, "Error reading number of animals from binary file\n"))
+		return 0;
+	if (!createAnimalArr(pStore))
+		return 0;
 	if(!loadAnimalArrFromBinaryFile(pStore, fp, "Error reading animals from binary file\n"))
 		return 0;
 	return 1;
@@ -221,7 +233,7 @@ int	createAnimalArr(Store* pStore)
 {
 	if (pStore->animalCount > 0)
 	{
-		pStore->animalArr = (Animal**)malloc(pStore->animalCount * sizeof(Animal*));
+		pStore->animalArr = (Animal**)realloc(pStore->animalArr, (pStore->animalCount + 1) * sizeof(Animal*));
 		if (!pStore->animalCount)
 		{
 			printf("Alocation error for animals\n");
@@ -260,7 +272,7 @@ int	loadAnimalArrFromTextFile(Store* pStore, FILE* fp, const char* msg)
 {
 	for (int i = 0; i < pStore->animalCount; i++)
 	{
-		if (!generalSaveLoadArrFile(pStore->animalArr[i], pStore->animalCount, sizeof(Animal*), fp, loadAnimalFromTextFile))
+		if (!generalSaveLoadArrFile(&pStore->animalArr[i], pStore->animalCount, sizeof(Animal*), fp, loadAnimalFromTextFile))
 		{
 			puts(msg);
 			return 0;
@@ -286,7 +298,7 @@ int	loadAnimalArrFromBinaryFile(Store* pStore, FILE* fp, const char* msg)
 {
 	for (int i = 0; i < pStore->animalCount; i++)
 	{
-		if (!generalSaveLoadArrFile(pStore->animalArr[i], pStore->animalCount, sizeof(Animal*), fp, loadAnimalFromBinaryFile))
+		if (!generalSaveLoadArrFile(&pStore->animalArr[i], pStore->animalCount, sizeof(Animal*), fp, loadAnimalFromBinaryFile))
 		{
 			puts(msg);
 			return 0;

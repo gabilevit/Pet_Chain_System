@@ -248,6 +248,8 @@ int loadStoreListFromBinaryFile(StoreManager* pManager, FILE* fp)
 		pStore = (Store*)calloc(1, sizeof(Store));
 		if (!pStore) {
 			printf("Error allocating memory for store\n");
+			freeStore(pStore);
+			free(pStore);
 			return 0;
 		}
 		if (!loadStoreFromBinaryFile(pStore, fp)) 

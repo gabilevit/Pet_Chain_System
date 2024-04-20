@@ -42,6 +42,8 @@ int	saveAnimalToTextFile(const Animal* pAnimal, FILE* fp);
 int	loadAnimalFromTextFile(Animal* pAnimal, FILE* fp);
 int	saveAnimalToBinaryFile(const Animal* pAnimal, FILE* fp);
 int	loadAnimalFromBinaryFile(Animal* pAnimal, FILE* fp);
+int createCategory(Animal* pAnimal);
+int createCertificate(Animal* pAnimal);
 int	createReviewArr(Animal* pAnimal);
 int	saveReviewArrToTextFile(const Animal* pAnimal, FILE* fp, const char* msg);
 int	loadReviewArrFromTextFile(Animal* pAnimal, FILE* fp, const char* msg);
