@@ -272,7 +272,7 @@ int	loadAnimalArrFromTextFile(Store* pStore, FILE* fp, const char* msg)
 {
 	for (int i = 0; i < pStore->animalCount; i++)
 	{
-		if (!generalSaveLoadArrFile(&pStore->animalArr[i], pStore->animalCount, sizeof(Animal*), fp, loadAnimalFromTextFile))
+		if (!generalSaveLoadArrFile(pStore->animalArr[i], pStore->animalCount, sizeof(Animal*), fp, loadAnimalFromTextFile))
 		{
 			puts(msg);
 			return 0;
@@ -298,7 +298,7 @@ int	loadAnimalArrFromBinaryFile(Store* pStore, FILE* fp, const char* msg)
 {
 	for (int i = 0; i < pStore->animalCount; i++)
 	{
-		if (!generalSaveLoadArrFile(&pStore->animalArr[i], pStore->animalCount, sizeof(Animal*), fp, loadAnimalFromBinaryFile))
+		if (!generalSaveLoadArrFile(pStore->animalArr[i], pStore->animalCount, sizeof(Animal*), fp, loadAnimalFromBinaryFile))
 		{
 			puts(msg);
 			return 0;
