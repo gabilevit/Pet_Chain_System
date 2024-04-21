@@ -3,6 +3,7 @@
 
 #include "Discount.h"
 #include "FileHelper.h"
+#include "macros.h"
 
 typedef enum {
 	eDog, eCat, eBird, eNofCategoryTypes

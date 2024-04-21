@@ -1,18 +1,18 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <crtdbg.h>
 #include "main.h"
 
 int main()
 {
-	StoreManager	manager;
+	StoreManager manager;
 	Store* theStore;
 	Category* dogCategory = (Category*)calloc(1, sizeof(Category));
 	Category* catCategory = (Category*)calloc(1, sizeof(Category));
 	Category* birdCategory = (Category*)calloc(1, sizeof(Category));
 	Category* chosenCategory;
-	init3CategoriesHardCoded(dogCategory, catCategory, birdCategory);
-	//initManager(&manager);
 	loadSystem(&manager);
+	initCategoriesFromData(&manager, dogCategory, catCategory, birdCategory);
 	int option;
 	int stop = 0;
 
@@ -69,12 +69,10 @@ int main()
 	saveManagerToTextFile(&manager, MANAGER_TEXT_FILE);
 	saveManagerToBinaryFile(&manager, MANAGER_BINARY_FILE);
 	freeManager(&manager);
-
 	return 1;
 }
 
 void storeLobby(Store* pStore, Category* cat1, Category* cat2, Category* cat3) {
-	//if (pStore == NULL) return;
 	Category* chosenCategory;
 	Animal* chosenAnimal;
 	int choice = 0;
@@ -110,7 +108,7 @@ void storeLobby(Store* pStore, Category* cat1, Category* cat2, Category* cat3) {
 			break;
 
 		case RETURN:
-			choice = 1;
+			choice = -2;
 			break;
 
 		default:
@@ -126,7 +124,7 @@ int menu()
 	printf("\n\n");
 	for (int i = 0; i < eNofOptionsInMain; i++)
 		printf("%d - %s\n", i, str2[i]);
-	printf("%d - Quit\n", EXIT);
+	printf("%d - Quit and save data\n", EXIT);
 	scanf("%d", &option);
 	//clean buffer
 	char tav;
@@ -172,11 +170,10 @@ int storeMenu()
 	return option;
 }
 
-void init3CategoriesHardCoded(Category* cat1, Category* cat2, Category* cat3)
+void initCategoriesFromData(StoreManager* manager, Category* dogCategory, Category* catCategory, Category* birdCategory)
 {
-	initCategory(cat1, 0);
-	initCategory(cat2, 1);
-	initCategory(cat3, 2);
+	if (!updateCategoriesFromData(manager, dogCategory, catCategory, birdCategory))
+		puts("There are no stores in the system\n");
 }
 
 Category* getSpecificCategory(eCategoryType eType, Category* dog, Category* cat, Category* bird)

@@ -4,6 +4,7 @@
 #include "Date.h"
 #include "General.h"
 #include "FileHelper.h"
+#include "macros.h"
 
 typedef struct
 {

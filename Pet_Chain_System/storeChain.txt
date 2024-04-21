@@ -1,7 +1,37 @@
 4
 1
 Netanya
+4
+Temper
+0
+23.500000
+30
+4
+2019
+1
+XXXXXX
+0
+9542
+Turkey
+This is a certificate authorized for Temper
+0
+Whiskers
+0
+50.750000
+17
 3
+2023
+1
+XXXXXX
+0
+1221
+England
+This is a certificate authorized for Whiskers
+1
+Nice cat!
+20
+4
+2024
 Jack
 0
 87.500000
@@ -20,23 +50,6 @@ I like this kind of dog
 4
 2024
 Nice animal!
-20
-4
-2024
-Whiskers
-0
-50.750000
-17
-3
-2023
-1
-XXXXXX
-0
-1221
-England
-This is a certificate authorized for Whiskers
-1
-Nice cat!
 20
 4
 2024
@@ -117,7 +130,7 @@ This is a certificate authorized for Mittens
 0
 3
 Eilat
-3
+4
 Pablo
 0
 26.500000
@@ -189,9 +202,22 @@ Worth the money!
 20
 4
 2024
+Baga
+0
+58.750000
+10
+2
+2019
+2
+TWET55
+15
+5976
+Madagascar
+This is a certificate authorized for Baga
+0
 4
 Haifa
-1
+2
 Spot
 0
 83.000000
@@ -207,5 +233,22 @@ This is a certificate authorized for Spot
 1
 Cute dog
 20
+4
+2024
+Belka
+1
+140.000000
+1
+1
+2021
+0
+DOGG20
+30
+4967
+Russia
+This is a certificate authorized for Belka
+1
+Its a white dog
+21
 4
 2024

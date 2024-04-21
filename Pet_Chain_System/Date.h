@@ -3,8 +3,10 @@
 
 #include "General.h"
 #include "FileHelper.h"
+#include "macros.h"
 
 #define MIN_YEAR 2000
+#define MAX_YEAR 2024
 
 typedef unsigned char BYTE;
 

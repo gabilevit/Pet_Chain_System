@@ -4,6 +4,7 @@
 #include "Animal.h"
 #include "General.h"
 #include "FileHelper.h"
+#include "macros.h"
 
 typedef enum { eNone, eName, ePrice, eBirth, eNofSortOpt } eSortOption;
 static const char* sortOptStr[eNofSortOpt] = { "Not Sorted", "Name", "Price", "Birth date" };;
@@ -19,6 +20,8 @@ typedef struct
 
 int initStore(Store* pStore, int storeNumber);
 int addAnimal(Store* pStore, Category* pCategory);
+int generateCertificateId(Store* pStore);
+int isCertificateIdUnique(Store* pStore, int num);
 Animal* findAnimal(Store* pStore, const char* animalName);
 Animal* getAnimal(Store* pStore);
 Certificate* findCertificateByAnimalId(Store* pStore, int id);

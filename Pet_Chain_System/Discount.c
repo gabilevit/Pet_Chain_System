@@ -62,10 +62,8 @@ int getDiscountPercent(Discount* pDis)
 
 int	saveDiscountToTextFile(const Discount* pDis, FILE* fp)
 {
-	if (!writeStringToTextFile(pDis->discountCode, fp, "Error writing discount code to text file\n"))
-		return 0;
-	if (!writeIntToTextFile(pDis->discountPercent, fp, "Error writing discount in percent to text file\n"))
-		return 0;
+	WRITE_STRING_TEXT_FILE_PRINT_RETURN(pDis->discountCode, fp, "Error writing discount code to text file\n", 0);
+	WRITE_INT_TEXT_FILE_PRINT_RETURN(pDis->discountPercent, fp, "Error writing discount in percent to text file\n", 0);
 	return 1;
 }
 
@@ -80,50 +78,20 @@ int	loadDiscountFromAnyFile(Discount* pDis, char* discountCode, int discountPerc
 
 int	saveDiscountToBinaryFile(const Discount* pDis, FILE* fp)
 {
-	if (!writeStringToFile(pDis->discountCode, fp, "Error writing discount code to binary file\n"))
-		return 0;
-	if (!writeIntToFile(pDis->discountPercent, fp, "Error writing discount percent to binary file\n"))
-		return 0;
+	WRITE_STRING_BINARY_FILE_PRINT_RETURN(pDis->discountCode, fp, "Error writing discount code to binary file\n", 0);
+	WRITE_INT_BINARY_FILE_PRINT_RETURN(pDis->discountPercent, fp, "Error writing discount percent to binary file\n", 0);
 	return 1;
-	//BYTE data[2] = { 0 };
-	//int len = (int)strlen(pDis->discountCode);
-	//data[0] =  len >> 1;
-	//data[1] = (len & 0x1) << 7 | pDis->discountPercent;
-	//if (fwrite(data, sizeof(BYTE), 2, fp) != 2) 
-	//{
-	//	puts("Error writing date to file");
-	//	return 0;
-	//}
-	//if (!writeStringToFile(pDis->discountCode, fp, "Error writing discount code to binary file\n"))
-	//	return 0;
-	//return 1;
-
-	//if (!pDis)
-	//	return 0;
-	//BYTE data[2];
-	//if (fread(&data, sizeof(BYTE), 2, fp) != 2)
-	//{
-	//	puts("Error writing date to file");
-	//	return 0;
-	//}
-	//int len = (data[0] << 1) & 0x7;
-	//pDis->discountPercent = data[1] & 0x7F;
-	//myGets(pDis->discountCode, MAX_STR_LEN, fp);
-	////This is the indication from saved file that there wasnt a discount
-	//if (!strcmp(pDis->discountCode, "XXXXXX") && (pDis->discountPercent == 0))
-	//	pDis = NULL;
-	//return 1;
 }
 
 void printDiscount(const Discount* pDis)
 {
 	printf("The discount code is: %s\n", pDis->discountCode);
-	printf("This category of animals in this type has a discount of %d%\n", pDis->discountPercent);
+	printf("This category of animals in this type has a discount of %d percent\n", pDis->discountPercent);
 }
 
 void freeDiscount(Discount* pDis)
 {
-	free(pDis);
+	FREE_POINTER(pDis);
 }
 
 

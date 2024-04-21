@@ -3,11 +3,10 @@
 #include <string.h>
 #include "Animal.h"
 
-void initAnimal(Animal* pAnimal, Category* pCategory, Certificate* pCertificate)
+int initAnimal(Animal* pAnimal, Category* pCategory, Certificate* pCertificate)
 {
 	pAnimal->name = getStrExactName("Enter pet name");
-	if (!pAnimal->name)
-		return;
+	PRINT_RETURN_NUM(pAnimal->name, 0, "Error saving name\n")
 	pAnimal->type = getgenderType();
 	getPrice(pAnimal);
 	getCorrectDate(&pAnimal->birth);
@@ -15,6 +14,7 @@ void initAnimal(Animal* pAnimal, Category* pCategory, Certificate* pCertificate)
 	pAnimal->cer = *pCertificate;
 	pAnimal->reviewArr = NULL;
 	pAnimal->reviewCount = 0;
+	return 1;
 }
 
 eGenderType getgenderType()
@@ -31,7 +31,7 @@ eGenderType getgenderType()
 	return (eGenderType)option;
 }
 
-int getPrice(Animal* pAnimal)
+void getPrice(Animal* pAnimal)
 {
 	printf("\nEnter the cost of the pet: ");
 	float price;
@@ -42,20 +42,21 @@ int getPrice(Animal* pAnimal)
 		}
 	} while (price <= 10);
 	pAnimal->price = price;
-	return 1;
 }
 
 int addReview(Animal* pAnimal)
 {
 	pAnimal->reviewArr = (Review*)realloc(pAnimal->reviewArr, (pAnimal->reviewCount + 1) * sizeof(Review));
 	if (!pAnimal->reviewArr)
+	{
+		free(pAnimal->reviewArr);
 		return 0;
+	}
 	if (!initReview(&pAnimal->reviewArr[pAnimal->reviewCount]))
 	{
 		freeReview(&pAnimal->reviewArr[pAnimal->reviewCount]);
 		return 0;
 	}
-	
 	pAnimal->reviewCount++;
 	return 1;
 }
@@ -89,10 +90,8 @@ int compareAnimalByBirthDate(const void* animal1, const void* animal2)
 int	saveAnimalToTextFile(const Animal** val, FILE* fp)
 {
 	const Animal* pAnimal = *(const Animal**)val;
-	if (!writeStringToTextFile(pAnimal->name, fp, "Error writing name to text file\n"))
-		return 0;
-	if (!writeIntToTextFile(pAnimal->type, fp, "Error writing gender type to text file\n"))
-		return 0;
+	WRITE_STRING_TEXT_FILE_PRINT_RETURN(pAnimal->name, fp, "Error writing name to text file\n", 0);
+	WRITE_INT_TEXT_FILE_PRINT_RETURN(pAnimal->type, fp, "Error writing gender type to text file\n", 0);
 	if (!writeFloatToTextFile(pAnimal->price, fp, "Error writing price to text file\n"))
 		return 0;
 	if (!saveDateToTextFile(&pAnimal->birth, fp))
@@ -101,8 +100,7 @@ int	saveAnimalToTextFile(const Animal** val, FILE* fp)
 		return 0;
 	if (!saveCertificateToTextFile(&pAnimal->cer, fp))
 		return 0;
-	if (!writeIntToTextFile(pAnimal->reviewCount, fp, "Error writing number of reviews to text file\n"))
-		return 0;
+	WRITE_INT_TEXT_FILE_PRINT_RETURN(pAnimal->reviewCount, fp, "Error writing number of reviews to text file\n", 0);
 	if (!saveReviewArrToTextFile(pAnimal, fp, "Error writing reviews to text file\n"))
 		return 0;
 	return 1;
@@ -110,10 +108,12 @@ int	saveAnimalToTextFile(const Animal** val, FILE* fp)
 
 int	loadAnimalFromTextFile(Animal** val, FILE* fp)
 {
-	Animal* pAnimal = *(const Animal**)val;
+	Animal* pAnimal = *(Animal**)val;
 	pAnimal->name = readDynStringFromTextFile(fp);
-	if (!readIntFromTextFile(&pAnimal->type, fp, "Error reading gender type from text file\n"))
+	int type;
+	if (!readIntFromTextFile(&type, fp, "Error reading gender type from text file\n"))
 		return 0;
+	pAnimal->type = type;
 	if (!readfloatFromTextFile(&pAnimal->price, fp, "Error reading price from text file\n"))
 		return 0;
 	if (!loadDateFromTextFile(&pAnimal->birth, fp))
@@ -138,10 +138,8 @@ int	loadAnimalFromTextFile(Animal** val, FILE* fp)
 int	saveAnimalToBinaryFile(const Animal** val, FILE* fp)
 {
 	const Animal* pAnimal = *(const Animal**)val;
-	if (!writeStringToFile(pAnimal->name, fp, "Error writing name to binary file\n"))
-		return 0;
-	if (!writeIntToFile(pAnimal->type, fp, "Error writing gender type to binary file\n"))
-		return 0;
+	WRITE_STRING_BINARY_FILE_PRINT_RETURN(pAnimal->name, fp, "Error writing name to binary file\n", 0);
+	WRITE_INT_BINARY_FILE_PRINT_RETURN(pAnimal->type, fp, "Error writing gender type to binary file\n", 0);
 	if (!writeFloatToFile(pAnimal->price, fp, "Error writing price to binary file\n"))
 		return 0;
 	if (!saveDateToBinaryFileCompressed(&pAnimal->birth, fp))
@@ -150,8 +148,7 @@ int	saveAnimalToBinaryFile(const Animal** val, FILE* fp)
 		return 0;
 	if (!saveCertificateToBinaryFile(&pAnimal->cer, fp))
 		return 0;
-	if (!writeIntToFile(pAnimal->reviewCount, fp, "Error writing number of reviews to binary file\n"))
-		return 0;
+	WRITE_INT_BINARY_FILE_PRINT_RETURN(pAnimal->reviewCount, fp, "Error writing number of reviews to binary file\n", 0);
 	if (!saveReviewArrToBinaryFile(pAnimal, fp, "Error writing reviews to binary file\n"))
 		return 0;
 	return 1;
@@ -159,10 +156,12 @@ int	saveAnimalToBinaryFile(const Animal** val, FILE* fp)
 
 int	loadAnimalFromBinaryFile(Animal** val, FILE* fp)
 {
-	Animal* pAnimal = *(const Animal**)val;
+	Animal* pAnimal = *(Animal**)val;
 	pAnimal->name = readStringFromFile(fp, "Error reading name from binary file\n");
-	if (!readIntFromFile(&pAnimal->type, fp, "Error reading gender type from binary file\n"))
+	int type;
+	if (!readIntFromFile(&type, fp, "Error reading gender type from binary file\n"))
 		return 0;
+	pAnimal->type = type;
 	if (!readFloatFromFile(&pAnimal->price, fp, "Error reading price from binary file\n"))
 		return 0;
 	if (!loadDateFromBinaryFileCompressed(&pAnimal->birth, fp))
@@ -190,7 +189,7 @@ int createCategory(Animal* pAnimal)
 	if (!pAnimal->pCategory) {
 		printf("Error allocating memory for category\n");
 		freeCategory(pAnimal->pCategory);
-		free(pAnimal->pCategory);
+		FREE_POINTER(pAnimal->pCategory);
 		return 0;
 	}
 	return 1;
@@ -200,9 +199,9 @@ int createCertificate(Animal* pAnimal)
 {
 	Certificate* pCer = (Certificate*)calloc(1, sizeof(Certificate));
 	if (!pCer) {
-		printf("Error allocating memory for certificate\n");
+		puts("Error allocating memory for certificate\n");
 		freeCertificate(pCer);
-		free(pCer);
+		FREE_POINTER(pCer);
 		return 0;
 	}
 	return 1;
@@ -269,19 +268,12 @@ void printAnimal(const  void* val)
 	printf("Animal price: %.2f\n", pAnimal->price);
 	printf("Birth ");
 	printDate(&pAnimal->birth);
-	//printf("Animal category: %s\n", CategoryTypeStr[pAnimal->pCategory->type]);
 	printCategory(pAnimal->pCategory);
 	printCertificate(&pAnimal->cer);
 	printf("\n ********* Has %d Reviews *********\n", pAnimal->reviewCount);
 	printReviewArr(pAnimal->reviewArr, pAnimal->reviewCount);
 	printf("\n");
 }
-
-//void printAnimalInShort(const void* val)
-//{
-//	const Animal* pStore = (const Animal*)val;
-//	printf("Store number: %d\n", pStore->storeNumber);
-//}
 
 void printReviewArr(Review* arr, int size)
 {
@@ -292,10 +284,12 @@ void freeAnimal(void* pAnimal)
 {
 	Animal* temp = *(Animal**)pAnimal;
 	freeCategory(temp->pCategory);
+	FREE_POINTER(temp->pCategory);
 	freeCertificate(&temp->cer);
 	freeReviewArr(temp->reviewArr, temp->reviewCount);
-	free(temp->reviewArr);
-	free(temp->name);
+	FREE_POINTER(temp->reviewArr);
+	FREE_POINTER(temp->name);
+	FREE_POINTER(temp);
 }
 
 void freeReviewArr(Review* arr, int size)

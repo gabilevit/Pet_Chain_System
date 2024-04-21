@@ -13,8 +13,8 @@ void getCorrectDate(Date* pDate)
 	int ok = 1;
 
 	do {
-		printf("Enter birth Date dd%c%cmm%c%cyyyy  minimum year %d\t",
-			SPECIAL_TAV, SPECIAL_TAV, SPECIAL_TAV, SPECIAL_TAV, MIN_YEAR);
+		printf("Enter birth Date dd%c%cmm%c%cyyyy  minimum year %d - maximum year %d\t",
+			SPECIAL_TAV, SPECIAL_TAV, SPECIAL_TAV, SPECIAL_TAV, MIN_YEAR, MAX_YEAR);
 		myGets(date, MAX_STR_LEN, stdin);
 		ok = checkDate(date, pDate);
 		if (!ok)
@@ -46,7 +46,7 @@ int	 checkDate(char* date, Date* pDate)
 		|| (date[6] != SPECIAL_TAV) || (date[7] != SPECIAL_TAV))
 		return 0;
 	sscanf(date, "%d%*c%*c%d%*c%*c%d", &day, &month, &year);
-	if (day < 1 || month < 1 || month > 12 || year < MIN_YEAR)
+	if (day < 1 || month < 1 || month > 12 || year < MIN_YEAR || year > MAX_YEAR)
 		return 0;
 
 	if (day > DAY_MONTHS[month - 1])
@@ -80,12 +80,9 @@ int	compareDate(const void* d1, const void* d2)
 
 int		saveDateToTextFile(const Date* pDate, FILE* fp)
 {
-	if (!writeIntToTextFile(pDate->day, fp, "Error writing day to text file\n"))
-		return 0;
-	if (!writeIntToTextFile(pDate->month, fp, "Error writing month to text file\n"))
-		return 0;
-	if (!writeIntToTextFile(pDate->year, fp, "Error writing year to text file\n"))
-		return 0;
+	WRITE_INT_TEXT_FILE_PRINT_RETURN(pDate->day, fp, "Error writing day to text file\n", 0);
+	WRITE_INT_TEXT_FILE_PRINT_RETURN(pDate->month, fp, "Error writing month to text file\n", 0);
+	WRITE_INT_TEXT_FILE_PRINT_RETURN(pDate->year, fp, "Error writing year to text file\n", 0);
 	return 1;
 }
 
@@ -129,11 +126,4 @@ int		loadDateFromBinaryFileCompressed(Date* pDate, FILE* fp)
 void printDate(const Date* pDate)
 {
 	printf("Date: %d/%d/%d\n", pDate->day, pDate->month, pDate->year);
-}
-
-int saveDateToFile(FILE* f, Date* pDate)
-{
-	if (fwrite(pDate, sizeof(Date), 1, f) != 1)
-		return 0;
-	return 1;
 }

@@ -19,21 +19,28 @@ int addAnimal(Store* pStore, Category* pCategory)
 {
 	Animal* pAnimal = (Animal*)calloc(1, sizeof(Animal));
 	if (!pAnimal)
+	{
+		free(pAnimal);
 		return 0;
+	}
 	Certificate* pCertificate = (Certificate*)calloc(1, sizeof(Certificate));
 	if (!pCertificate)
+	{
+		free(pCertificate);
 		return 0;
+	}
 	int certificateAnimalId = generateCertificateId(pStore);
 	if (!initCertificate(pCertificate, certificateAnimalId))
 	{
 		freeCertificate(pCertificate); //will free also pStore
 		return 0;
 	}
-	initAnimal(pAnimal, pCategory, pCertificate);
+	if (!initAnimal(pAnimal, pCategory, pCertificate))
+		return 0;
 	pStore->animalArr = (Animal**)realloc(pStore->animalArr, (pStore->animalCount + 1) * sizeof(Animal*));
 	if (!pStore->animalArr)
 	{
-		free(pAnimal);
+		free(pStore->animalArr);
 		return 0;
 	}
 	pStore->animalArr[pStore->animalCount] = pAnimal;
@@ -177,12 +184,9 @@ eSortOption showSortMenu()
 
 int	saveStoreToTextFile(const Store* pStore, FILE* fp)
 {
-	if (!writeIntToTextFile(pStore->storeNumber, fp, "Error writing store number to text file\n"))
-		return 0;
-	if (!writeStringToTextFile(pStore->city, fp, "Error writing city to text file\n"))
-		return 0;
-	if (!writeIntToTextFile(pStore->animalCount, fp, "Error writing number of animals to text file\n"))
-		return 0;
+	WRITE_INT_TEXT_FILE_PRINT_RETURN(pStore->storeNumber, fp, "Error writing store number to text file\n", 0);
+	WRITE_STRING_TEXT_FILE_PRINT_RETURN(pStore->city, fp, "Error writing city to text file\n", 0);
+	WRITE_INT_TEXT_FILE_PRINT_RETURN(pStore->animalCount, fp, "Error writing number of animals to text file\n", 0);
 	if (!saveAnimalArrToTextFile(pStore, fp, "Error writing animals to text file\n"))
 		return 0;
 	return 1;
@@ -204,12 +208,9 @@ int	loadStoreFromTextFile(Store* pStore, FILE* fp)
 
 int	saveStoreToBinaryFile(const Store* pStore, FILE* fp)
 {
-	if (!writeIntToFile(pStore->storeNumber, fp, "Error writing store number to binary file\n"))
-		return 0;
-	if (!writeStringToFile(pStore->city, fp, "Error writing city to binary file\n"))
-		return 0;
-	if (!writeIntToFile(pStore->animalCount, fp, "Error writing number of animals to binary file\n"))
-		return 0;
+	WRITE_INT_BINARY_FILE_PRINT_RETURN(pStore->storeNumber, fp, "Error writing store number to binary file\n", 0);
+	WRITE_STRING_BINARY_FILE_PRINT_RETURN(pStore->city, fp, "Error writing city to binary file\n", 0);
+	WRITE_INT_BINARY_FILE_PRINT_RETURN(pStore->animalCount, fp, "Error writing number of animals to binary file\n", 0);
 	if (!saveAnimalArrToBinaryFile(pStore, fp, "Error writing animals to binary file\n"))
 		return 0;
 	return 1;
@@ -234,9 +235,9 @@ int	createAnimalArr(Store* pStore)
 	if (pStore->animalCount > 0)
 	{
 		pStore->animalArr = (Animal**)realloc(pStore->animalArr, (pStore->animalCount + 1) * sizeof(Animal*));
-		if (!pStore->animalCount)
+		if (!pStore->animalArr)
 		{
-			printf("Alocation error for animals\n");
+			free(pStore->animalArr);
 			return 0;
 		}
 	}
@@ -246,11 +247,7 @@ int	createAnimalArr(Store* pStore)
 	for (int i = 0; i < pStore->animalCount; i++)
 	{
 		pStore->animalArr[i] = (Animal*)calloc(1, sizeof(Animal));
-		if (!pStore->animalArr[i])
-		{
-			printf("Alocation error for animal\n");
-			return 0;
-		}
+		PRINT_RETURN_NUM(pStore->animalArr[i], 0, "Alocation error for animal\n")
 	}
 	return 1;
 }
@@ -320,9 +317,9 @@ void printAnimalsArr(Animal** arr, int size)
 void freeStore(void* val)
 {
 	const Store* pStore = (const Store*)val;
-	free(pStore->city);
 	freeAnimalsArr(pStore->animalArr, pStore->animalCount);
-	free(pStore->animalArr);
+	FREE_POINTER(pStore->city);
+	FREE_POINTER(pStore->animalArr);
 }
 
 void freeAnimalsArr(Animal** arr, int size)

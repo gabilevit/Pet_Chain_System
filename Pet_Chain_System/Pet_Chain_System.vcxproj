@@ -116,6 +116,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)_CRT_SECURE_NO_WARNINGS;</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <DisableSpecificWarnings>6031</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -148,6 +149,7 @@
     <ClInclude Include="FileHelper.h" />
     <ClInclude Include="General.h" />
     <ClInclude Include="List.h" />
+    <ClInclude Include="macros.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="Review.h" />
     <ClInclude Include="Store.h" />

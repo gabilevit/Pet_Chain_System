@@ -6,6 +6,7 @@
 #include "Review.h"
 #include "General.h"
 #include "FileHelper.h"
+#include "macros.h"
 
 typedef enum {
 	eMale, eFemlae, eNofGenderTypes
@@ -27,9 +28,9 @@ typedef struct
 	Review* reviewArr;
 }Animal;
 
-void initAnimal(Animal* pAnimal, Category* pCategory, Certificate* pCertificate);
+int initAnimal(Animal* pAnimal, Category* pCategory, Certificate* pCertificate);
 eGenderType getgenderType();
-int getPrice(Animal* pAnimal);
+void getPrice(Animal* pAnimal);
 int addReview(Animal* pAnimal);
 
 // COMPARE FUNCTIONS

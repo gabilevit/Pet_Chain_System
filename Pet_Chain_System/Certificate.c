@@ -7,22 +7,17 @@ int initCertificate(Certificate* pCer, int certificateId)
 {
 	pCer->animalCertificateId = certificateId;
 	pCer->countryOfOrigin = getStrExactName("Enter country of origin");
-	if (!pCer->countryOfOrigin)
-		return 0;
+	PRINT_RETURN_NUM(pCer->countryOfOrigin, 0, "Error saving country\n")
 	pCer->animalDescription = getStrExactName("Enter a short description of the animal breed (255 max string lenght)");
-	if (!pCer->animalDescription)
-		return 0;
+	PRINT_RETURN_NUM(pCer->animalDescription, 0, "Error saving description\n");
 	return 1;
 }
 
 int	saveCertificateToTextFile(const Certificate* pCer, FILE* fp)
 {
-	if (!writeIntToTextFile(pCer->animalCertificateId, fp, "Error writing id to text file\n"))
-		return 0;
-	if (!writeStringToTextFile(pCer->countryOfOrigin, fp, "Error writing country to text file\n"))
-		return 0;
-	if (!writeStringToTextFile(pCer->animalDescription, fp, "Error writing description to text file\n"))
-		return 0;
+	WRITE_INT_TEXT_FILE_PRINT_RETURN(pCer->animalCertificateId, fp, "Error writing id to text file\n", 0);
+	WRITE_STRING_TEXT_FILE_PRINT_RETURN(pCer->countryOfOrigin, fp, "Error writing country to text file\n", 0);
+	WRITE_STRING_TEXT_FILE_PRINT_RETURN(pCer->animalDescription, fp, "Error writing description to text file\n", 0);
 	return 1;
 }
 
@@ -37,12 +32,9 @@ int	loadCertificateFromTextFile(Certificate* pCer, FILE* fp)
 
 int	saveCertificateToBinaryFile(const Certificate* pCer, FILE* fp)
 {
-	if (!writeIntToFile(pCer->animalCertificateId, fp, "Error writing id to binary file\n"))
-		return 0;
-	if (!writeStringToFile(pCer->countryOfOrigin, fp, "Error writing country to binary file\n"))
-		return 0;
-	if (!writeStringToFile(pCer->animalDescription, fp, "Error writing description to binary file\n"))
-		return 0;
+	WRITE_INT_BINARY_FILE_PRINT_RETURN(pCer->animalCertificateId, fp, "Error writing id to binary file\n", 0);
+	WRITE_STRING_BINARY_FILE_PRINT_RETURN(pCer->countryOfOrigin, fp, "Error writing country to binary file\n", 0);
+	WRITE_STRING_BINARY_FILE_PRINT_RETURN(pCer->animalDescription, fp, "Error writing description to binary file\n", 0);
 	return 1;
 }
 
@@ -64,6 +56,6 @@ void printCertificate(const Certificate* pCer)
 
 void freeCertificate(Certificate* pCer)
 {
-	free(pCer->countryOfOrigin);
-	free(pCer->animalDescription);
+	FREE_POINTER(pCer->countryOfOrigin);
+	FREE_POINTER(pCer->animalDescription);
 }

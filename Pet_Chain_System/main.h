@@ -38,7 +38,7 @@ int menu();
 void loadSystem(StoreManager* pManager);
 int storeMenu();
 void storeLobby(Store* pStore, Category* cat1, Category* cat2, Category* cat3);
-void init3CategoriesHardCoded(Category* cat1, Category* cat2, Category* cat3);
+void initCategoriesFromData(StoreManager* manager, Category* dogCategory, Category* catCategory, Category* birdCategory);
 Category* getSpecificCategory(eCategoryType eType, Category* cat1, Category* cat2, Category* cat3);
 
 #endif // !__MAIN__

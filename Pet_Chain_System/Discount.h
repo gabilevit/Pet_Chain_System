@@ -3,6 +3,7 @@
 
 #include "General.h"
 #include "FileHelper.h"
+#include "macros.h"
 
 #define LEN 6
 

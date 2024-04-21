@@ -6,16 +6,14 @@
 int initReview(Review* pRev)
 {
 	pRev->comment = getStrExactName("Write a comment (max 255 string lenght):");
-	if (!pRev->comment)
-		return 0;
+	PRINT_RETURN_NUM(pRev->comment, 0, "Error saving comment\n");
 	generateCurrentDate(&pRev->date);
 	return 1;
 }
 
 int	saveReviewToTextFile(const Review* pRev, FILE* fp)
 {
-	if (!writeStringToTextFile(pRev->comment, fp, "Error writing comment to text file\n"))
-		return 0;
+	WRITE_STRING_TEXT_FILE_PRINT_RETURN(pRev->comment, fp, "Error writing comment to text file\n", 0);
 	if (!saveDateToTextFile(&pRev->date, fp))
 		return 0;
 	return 1;
@@ -31,8 +29,7 @@ int	loadReviewFromTextFile(Review* pRev, FILE* fp)
 
 int	saveReviewToBinaryFile(const Review* pRev, FILE* fp)
 {
-	if (!writeStringToFile(pRev->comment, fp, "Error writing comment to binary file\n"))
-		return 0;
+	WRITE_STRING_BINARY_FILE_PRINT_RETURN(pRev->comment, fp, "Error writing comment to binary file\n", 0);
 	if (!saveDateToBinaryFileCompressed(&pRev->date, fp))
 		return 0;
 	return 1;
@@ -56,5 +53,5 @@ void printReview(const void* val)
 void freeReview(void* pReview)
 {
 	Review* pRev = (Review*)pReview;
-	free(pRev->comment);
+	FREE_POINTER(pRev->comment);
 }

@@ -3,6 +3,7 @@
 
 #include "General.h"
 #include "FileHelper.h"
+#include "macros.h"
 
 #define MIN_CERTIFICATE_ID 1000
 #define MAX_CERTIFICATE_ID 9999

@@ -6,10 +6,11 @@
 #include "list.h"
 #include "Store.h"
 #include "FileHelper.h"
+#include "macros.h"
 
 typedef struct
 {
-	char chainName[NAME];
+	char chainName[MAX_STR_LEN];
 	LIST storeList;
 }StoreManager;
 
@@ -22,6 +23,7 @@ Store* findStore(StoreManager* manager, const int storeNumber);
 Store* enterTheStore(StoreManager* pManager);
 void addDiscountToAllAnimalsToSpesificCategory(StoreManager* pManager, Category* pChosenCategory);
 void isSameCategoryType(Animal* pAnimal, Category* pCategory);
+int updateCategoriesFromData(StoreManager* pManager, Category* pCat1, Category* pCat2, Category* pCat3);
 
 // 2 CREATIVE FUNCTIONS
 void findMostPopularAnimalInTheWholeChain(StoreManager* pManager);
